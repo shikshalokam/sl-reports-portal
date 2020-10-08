@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6" style="margin-top: 8.1%;">
+            <div [chart]="barchart3"></div>
+        </div>
+        <div class="col-sm-6">
+            <select id="resource" [(ngModel)]="resourceSelected" name="resourceSelected"
+                (change)="updateValues(resourceSelected)">
+                <option [value]="resourceSelected" disabled selected="selected">Choose a Resource
+                </option>
+                <option *ngFor="let name of content_names" [(ngValue)]="name.name" style=" font-size: 11px;">
+                    {{name.name}}
+                </option>
+            </select>
+            <div class="row">
+                <div class="col-sm-12" style="margin-top: 2%;">
+                    <div *ngFor="let item of chartData2" style="font-family: 'Segoe UI';font-size:16px; text-align:center">
+                      <b> {{item.key}}:{{item.value}}</b>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" style="margin-top: 7.3%;">
+                    <div [chart]="barchart"></div>
+
+                </div>
+            </div>
+            <!-- <div [chart]="barchart1"></div> -->
+        </div>
+    </div>
+</div>

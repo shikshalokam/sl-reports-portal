@@ -1,0 +1,146 @@
+[
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz1",
+    "Participation Percentage": "80",
+    "Score Percentage": "80"
+  },
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz2",
+    "Participation Percentage": "70",
+    "Score Percentage": "70"
+  },
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz3",
+    "Participation Percentage": "87",
+    "Score Percentage": "87"
+  },
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz4",
+    "Participation Percentage": "66",
+    "Score Percentage": "66"
+  },
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz5",
+    "Participation Percentage": "70",
+    "Score Percentage": "70"
+  },
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz6",
+    "Participation Percentage": "12",
+    "Score Percentage": "12"
+  },
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz7",
+    "Participation Percentage": "5",
+    "Score Percentage": "5"
+  },
+  {
+    "Group ID": "Group 1",
+    "Quiz Name": "Quiz8",
+    "Participation Percentage": "32",
+    "Score Percentage": "32"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz1",
+    "Participation Percentage": "82",
+    "Score Percentage": "88"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz2",
+    "Participation Percentage": "95",
+    "Score Percentage": "84"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz3",
+    "Participation Percentage": "87",
+    "Score Percentage": "55"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz4",
+    "Participation Percentage": "57",
+    "Score Percentage": "59"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz5",
+    "Participation Percentage": "77",
+    "Score Percentage": "77"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz6",
+    "Participation Percentage": "56",
+    "Score Percentage": "94"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz7",
+    "Participation Percentage": "43",
+    "Score Percentage": "93"
+  },
+  {
+    "Group ID": "Group2",
+    "Quiz Name": "Quiz8",
+    "Participation Percentage": "95",
+    "Score Percentage": "54"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz1",
+    "Participation Percentage": "66",
+    "Score Percentage": "54"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz2",
+    "Participation Percentage": "67",
+    "Score Percentage": "29"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz3",
+    "Participation Percentage": "67",
+    "Score Percentage": "54"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz4",
+    "Participation Percentage": "67",
+    "Score Percentage": "13"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz5",
+    "Participation Percentage": "68",
+    "Score Percentage": "50"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz6",
+    "Participation Percentage": "68",
+    "Score Percentage": "39"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz7",
+    "Participation Percentage": "68",
+    "Score Percentage": "34"
+  },
+  {
+    "Group ID": "Group3",
+    "Quiz Name": "Quiz8",
+    "Participation Percentage": "69",
+    "Score Percentage": "52"
+  }
+]

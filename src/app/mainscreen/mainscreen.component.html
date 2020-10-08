@@ -1,0 +1,26 @@
+<mat-sidenav-container >
+  <mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true">
+    <mat-nav-list class=sidenav >
+      <a mat-list-item style="border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; font-size:14px; "
+        [routerLink]="['/home']">
+        Home
+      </a>
+      <a mat-list-item style="border-bottom: 1px solid lightgray; font-size:14px" [routerLink]="['/adoption']">
+        Adoption
+      </a>
+      <a mat-list-item style="border-bottom: 1px solid lightgray; font-size:14px" [routerLink]="['/learning']">
+        Learning
+      </a>
+      <a mat-list-item style="border-bottom: 1px solid lightgray; font-size:14px" [routerLink]="['teacher-attendance']">
+        Engagement
+      </a>
+      <a mat-list-item style=" border-bottom: 1px solid lightgray; font-size:14px" [routerLink]="['/program-effectivness']">
+        Program Effectiveness
+      </a>
+      <span class="toolbar-filler"></span>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -10,23 +10,49 @@ import { PortalCoreModule } from './modules/portal-core/portal-core.module';
 import { PortalSharedModule } from './modules/portal-shared/portal-shared.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { CoreModuleModule } from 'shikshalokam';
-import {TranslateModule, TranslateLoader, TranslateService} from "@ngx-translate/core";
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateService,
+} from '@ngx-translate/core';
 
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { HomeComponent } from './chart-modules/home/home.component';
+import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
+import { ComplianceComponent } from './chart-modules/compliance/compliance.component';
+
+// import { HighchartsChartComponent } from 'highcharts-angular';
+import { ChartModule } from 'angular-highcharts';
+import { MainscreenComponent } from './mainscreen/mainscreen.component';
+declare var require:any
+
+const exporting = require('highcharts/modules/exporting.src')
+const  exportdata = require('highcharts/modules/export-data.src')
+const  wordcloud = require('highcharts/modules/wordcloud.src')
+import * as Highcharts from 'highcharts';
+import { ProgramEffectivenessComponent } from './chart-modules/program-effectiveness/program-effectiveness.component';
+import { LearningComponent } from './chart-modules/learning/learning.component';
+exporting(Highcharts);
+exportdata(Highcharts);
+wordcloud(Highcharts);
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    ComplianceComponent,
+    MainscreenComponent,
+    ProgramEffectivenessComponent,
+    LearningComponent,
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule,ChartModule,
     AppRoutingModule,
     KeycloakAngularModule,
     PortalCoreModule,
@@ -36,24 +62,24 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateModule.forChild(),
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-    })  
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+    SidebarModule,
+
+    ChartModule,
   ],
-  entryComponents: [
-    AppComponent
-  ],
+  entryComponents: [AppComponent],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
-      deps: [KeycloakService]
+      deps: [KeycloakService],
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {}

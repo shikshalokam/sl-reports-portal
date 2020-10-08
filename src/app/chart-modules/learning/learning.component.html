@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <select id="resource" [(ngModel)]="QuizNameSelected" name="QuizNameSelected" (change)="updateValues(QuizNameSelected)">
+        <option [value]="QuizNameSelected" disabled selected="selected">Choose a QuizName</option>
+        <option *ngFor="let name of quiz_names" [(ngValue)]="name.name" style="font-size: 11px" >{{ name.name }}</option>
+      </select>
+      <div class="row">
+          <div class="col-sm-12" class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Section Name</th>
+                    <th>District</th>
+                    <th>Role_ExternalId</th>
+                    <th>User_FirstName</th>
+                    <th>Score Percentage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cs of tableData; index as i"  [ngClass]="{'color': (cs['Score Percentage']> 95 && cs['Score Percentage'] <= 100) , 'color1':
+                    (cs['Score Percentage']  > 80 && cs['Score Percentage'] <95) }">
+                    <td>{{ cs['section_name'] }}</td>
+                    <td>{{ cs['district'] }}</td>
+                    <td>{{ cs['role_externalId'] }}</td>
+                    <td>{{ cs['User_FirstName'] }}</td>
+                    <td>{{ cs['score_percentage'] }}%</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+      </div>
+      
+    </div>
+    <!-- <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-4">
+                <select id="resource" [(ngModel)]="learningNameSelected1" name="learningNameSelected1" (change)="learningupdateValues1(learningNameSelected1)">
+                    <option [value]="learningNameSelected1" disabled selected="selected">Choose a QuizName</option>
+                    <option *ngFor="let name of learning_quiz_names" [(ngValue)]="name.name" style="font-size: 11px">{{ name.name }}</option>
+                  </select>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+                <select id="resource" [(ngModel)]="learningNameSelected2" name="learningNameSelected2" (change)="learningupdateValues2(learningNameSelected2)">
+                    <option [value]="learningNameSelected2" disabled selected="selected">Choose a QuizName</option>
+                    <option *ngFor="let name of learning_quiz_names" [(ngValue)]="name.name" style="font-size: 11px">{{ name.name }}</option>
+                  </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+              <div [chart]="participation"></div>
+            </div>
+          </div>  
+          <div class="row">
+              <div class="col-sm-12">
+                  <div [chart]="score"></div>
+              </div>
+          </div>
+        </div> -->
+
+    
+    
+  </div>
+</div>
