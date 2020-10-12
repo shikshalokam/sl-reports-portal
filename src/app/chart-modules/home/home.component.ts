@@ -48,6 +48,8 @@ export class HomeComponent implements OnInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
   markerData: any;
+  previousDate:any
+
 
   mouseenter() {
     if (!this.isExpanded) {
@@ -68,7 +70,23 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.homedata();
+    var date = new Date();
+    date.setDate(date.getDate() - 1);
+    this.convert(date)
+   // var last = new Date(date.getTime() - (1 * 24 * 60 * 60 * 1000));
+   // this.previousDate =last;
   }
+  convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+      this.previousDate=[day,mnth,date.getFullYear(),  ].join("-");
+      console.log(this.previousDate)
+    return this.previousDate
+  }
+  
+  
+
   homedata() {
 this.service.topscorer().subscribe((response4) => {
       this.topscorer = response4;
@@ -172,21 +190,10 @@ this.service.map_loginpercentage().subscribe((res) => {
       }
     ).addTo(globalMap);
 
-    data.sort((a, b) =>
-      Number(a.properties.login_percentage) >
-      Number(b.properties.login_percentage)
-        ? 1
-        : Number(b.properties.login_percentage) >
-          Number(a.properties.login_percentage)
-        ? -1
-        : 0
+    data.sort((a, b) =>Number(a.properties.login_percentage) >Number(b.properties.login_percentage)? 1
+        : Number(b.properties.login_percentage) >Number(a.properties.login_percentage)? -1: 0
     );
-    var colors: any = this.color().generateGradient(
-      '#FF0000',
-      '#7FFF00',
-      data.length,
-      'rgb'
-    );
+    var colors: any = this.color().generateGradient('#FF0000','#7FFF00',data.length,'rgb');
 
     var i = 0;
     var index;
@@ -275,16 +282,12 @@ this.service.map_loginpercentage().subscribe((res) => {
         ? -1
         : 0
     );
-    var colors: any = this.color().generateGradient(
-      '#FF0000',
-      '#7FFF00',
-      data.length,
-      'rgb'
-    );
+    var colors: any = this.color().generateGradient('#FF0000','#7FFF00',data.length,'rgb');
 
     var i = 0;
     var index;
     function getColor(d) {
+      console.log(d)
       index = i;
       i++;
       return colors[index];
@@ -334,7 +337,10 @@ this.service.map_loginpercentage().subscribe((res) => {
       onEachFeature: onEachFeature,
     }).addTo(globalMap);
     globalMap.on('click', this.onMapClick);
+  
+  
   }
+  
 
   onMapClick(e) {
    // console.log(e);

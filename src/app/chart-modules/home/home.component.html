@@ -1,36 +1,39 @@
     <div class="container-fluid" style="font-family: 'Segoe UI'">
-      <div class="row" style="padding: 4px 4px 0px 4px;font-size: 16px ">
-        <span><b>Total Unique Users Yesterday :</b></span>
+      <div class="row" style="font-size: 16px ">
         <div class="col-sm-2">
+          <span><b>Unique Active Users :</b></span> </div>
+        <div class="col-sm-1">
           <span style="color: blue"> <b>Bodh: {{ bodhCount }} </b></span>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-1">
           <span style="color: black"><b> Unnati: {{ unnatiCount }}</b> </span>
         </div>
         <div class="col-sm-2">
           <span style="color: green"><b> Samiksha: {{ samikshaCount }}</b> </span>
         </div>
-        <div class="col-sm-4">
-          <p style="text-align: center; font-size: 16px "><b>Average Time Spent </b>
+        <div class="col-sm-3">
+          <p style="font-size: 16px "><b>Average Time Spent </b>
             <span style="text-align: center; font-size: 16px"><b>Bodh:</b> {{growth_in_minutes}}
               <td style="font-size: 12px;" [ngClass]="{'positive' : minutes_time > 0,'negative' : minutes_time < 0}">
                 [{{minutes_time}}]</td> </span>
           </p>
         </div>
+        <div class="col-sm-3">
+          <p style="font-size: 16px "><b>Last Updated On:{{previousDate}} </b></p>
+
+        </div>
       </div>
       <hr>
       <div class="row">
-        <div class="col-sm-7">
-          <!-- <p style="text-align: center; font-size: 16px "><b>Average Time Spent Yesterday</b>
-            <span style="text-align: center; "><b>Bodh</b> <br><span style="font-size: 25px;"> {{growth_in_minutes}}</span>
-              <td style="font-size: 12px;" [ngClass]="{'positive' : minutes_time > 0,'negative' : minutes_time < 0}">
-                [{{minutes_time}}]</td>
-            </span>
-          </p> -->
-          <div style="height:80vh" class="active" [chart]="linechart"></div>
-        </div>
+        
+        <div class="col-sm-6">
+          <div class="col-md-12" style="border:2px solid black">
+            <div style="height:86vh" class="active" [chart]="linechart"></div>
+          </div>
+           </div>
 
-        <div class="col-sm-5">
+     <div class="col-sm-6">
+      <div class="col-md-12" style="border:2px solid black">
           <div class="row">
             <div class="col-sm-12">
               <p style="text-align: center; font-size: 16px ">No of Resources per District </p>
@@ -45,13 +48,25 @@
 
             </div>
           </div>
+
+     </div>
+
         </div>
+
       </div>
+
+
       <div class="row">
-        <div class="col-sm-6" style="margin-top:4.5%;">
-          <div class="active" [chart]="barchart"></div>
+
+        <div class="col-sm-6" style="margin-top:3%;">
+          <div class="col-md-12" style="border:2px solid black">
+            <div style="height:59vh" class="active" [chart]="barchart"></div>
+
+         </div>
         </div>
-        <div class="col-sm-6" style="margin-top: 1.5%;">
+
+        <div class="col-sm-6" style="margin-top: 3%;">
+          <div class="col-md-12" style="border:2px solid black">
           <p style="text-align: center; font-size:16px">Average Rating for Content</p>
           <table class="table table-bordered" >
             <thead>
@@ -69,7 +84,7 @@
               </tr>
             </tbody>
           </table>
-
+        </div>
         </div>
       </div>
     </div>

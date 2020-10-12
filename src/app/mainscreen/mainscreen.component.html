@@ -1,4 +1,4 @@
-<mat-sidenav-container >
+<mat-sidenav-container>
   <mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true">
     <mat-nav-list class=sidenav >
       <a mat-list-item style="border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; font-size:14px; "
@@ -21,6 +21,8 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <div style="height: 160vh;overflow-y: hidden;">
+<router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
