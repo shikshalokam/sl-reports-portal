@@ -34,29 +34,42 @@ export class LearningComponent implements OnInit {
 
   ngOnInit() {
     this.QuizNameSelected = "Endline quiz (3H strategy)";
-    this.learningNameSelected1 = 'Quiz1';
-    this.learningNameSelected2 = 'Quiz2';
+    this.learningNameSelected1 = 'Baseline Quiz';
+    this.learningNameSelected2 = 'Baseline quiz (3H strategy)';
 
-    this.service.topscoreinquiz().subscribe((res) => {
-      this.data = res;
+    this.service.topscoreinquiz().subscribe((response1) => {
+      this.data = response1;
+      console.log(this.data)
       this.QuizName = this.data.map((value) => value['section_name']).filter((value, index, _arr) => _arr.indexOf(value) == index);
       for (var i = 0; i < this.QuizName.length; i++) {
         this.quiz_names.push({ name: this.QuizName[i] });
       }
       this.updateValues(this.QuizNameSelected);
+      this.service.learningquiz().subscribe((response2) => {
+        this.learningQuiz = response2;
+        this.learningQuizName = this.learningQuiz
+          .map((value) => value['section_name'])
+          .filter((value, index, _arr) => _arr.indexOf(value) == index);
+        for (var i = 0; i < this.learningQuizName.length; i++) {
+          this.learning_quiz_names.push({ name: this.learningQuizName[i] });
+        }
+        this.learningupdateValues1(this.learningNameSelected1);
+        this.learningupdateValues2(this.learningNameSelected2);
+      });
+
     });
 
-    this.service.learningquiz().subscribe((res) => {
-      this.learningQuiz = res;
-      this.learningQuizName = this.learningQuiz
-        .map((value) => value['Quiz Name'])
-        .filter((value, index, _arr) => _arr.indexOf(value) == index);
-      for (var i = 0; i < this.learningQuizName.length; i++) {
-        this.learning_quiz_names.push({ name: this.learningQuizName[i] });
-      }
-      this.learningupdateValues1(this.learningNameSelected1);
-      this.learningupdateValues2(this.learningNameSelected2);
-    });
+    // this.service.learningquiz().subscribe((response2) => {
+    //   this.learningQuiz = response2;
+    //   this.learningQuizName = this.learningQuiz
+    //     .map((value) => value['section_name'])
+    //     .filter((value, index, _arr) => _arr.indexOf(value) == index);
+    //   for (var i = 0; i < this.learningQuizName.length; i++) {
+    //     this.learning_quiz_names.push({ name: this.learningQuizName[i] });
+    //   }
+    //   this.learningupdateValues1(this.learningNameSelected1);
+    //   this.learningupdateValues2(this.learningNameSelected2);
+    // });
   }
 
   updateValues(quiz_name) {
@@ -75,9 +88,9 @@ export class LearningComponent implements OnInit {
     this.data1 = [];
     this.data3=[];
     this.learningQuiz.forEach((cs) => {
-      if (cs['Quiz Name'] == learningQuiz) {
-        this.data1.push(Number(cs['Participation Percentage']));
-        this.data3.push(Number(cs['Score Percentage']));
+      if (cs['section_name'] == learningQuiz) {
+        this.data1.push(Number(cs['participation_percentage']));
+        this.data3.push(Number(cs['score_percentage']));
 
       }
     });
@@ -87,10 +100,10 @@ export class LearningComponent implements OnInit {
     this.data2 = [];
     this.data4=[];
     this.learningQuiz.forEach((cs) => {
-      if (cs['Quiz Name'] == learningQuiz) {
-        this.data2.push(Number(cs['Participation Percentage']));
-        this.data4.push(Number(cs['Score Percentage']));
-        this.categories.push(cs["Group ID"])
+      if (cs['section_name'] == learningQuiz) {
+        this.data2.push(Number(cs['participation_percentage']));
+        this.data4.push(Number(cs['score_percentage']));
+        this.categories.push(cs["role_externalId"])
 
       }
     });
@@ -146,8 +159,13 @@ export class LearningComponent implements OnInit {
             enabled: true,
           },
         },
+        series:{
+        }
       },
       series: result,
+      tooltip:{
+         valueSuffix:'%'
+      },
       exporting: {
         enabled: false,
       },
@@ -191,12 +209,16 @@ ScorePer(result) {
        },
        plotOptions: {
          bar: {
+           
            dataLabels: {
              enabled: true,
            },
          },
        },
        series: result,
+       tooltip:{
+         valueSuffix:'%'
+       },
        exporting: {
          enabled: false,
        },

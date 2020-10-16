@@ -85,13 +85,14 @@ export class AppServiceComponent {
     );
   }
   topscoreinquiz(): Observable<any> {
-    return this.http.get(
-      `${this.baseUrl}/learning_topscore_quiz/learningtopscore`,
-      { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
-    );
-    //  return this.http.get('../../assets/topscorersinquiz.json');
+    // return this.http.get(
+    //   `${this.baseUrl}/learning_topscore_quiz/learningtopscore`,
+    //   { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
+    // );
+     return this.http.get('http://localhost:3000/dhiti/api/v1/learning_topscore_quiz/learningtopscore');
   }
-  learningquiz(): Observable<any> {
-    return this.http.get('../../assets/learning_quiz.json');
+  learningquiz(): Observable<any> {   
+    return this.http.get('http://localhost:3000/dhiti/api/v1/learning_group_participation_percentage/learning_group_participation_percentage')
+    // return this.http.get('../../assets/learning_quiz.json');
   }
 }
