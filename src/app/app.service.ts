@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
 export class AppServiceComponent {
   baseUrl = environment.apiEndpoint;
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   login_trend(): Observable<any> {
     return this.http.get(`${this.baseUrl}/login_trend/logintrend`, {
@@ -22,7 +22,7 @@ export class AppServiceComponent {
     return this.http.get(`${this.baseUrl}/app_login_count/applogincount`, {
       headers: { token: 'Bearer ' + localStorage.getItem('token') },
     });
-    
+
   }
   app_percentage(): Observable<any> {
     return this.http.get(`${this.baseUrl}/app_percentage/apppercentage`, {
@@ -89,10 +89,15 @@ export class AppServiceComponent {
     //   `${this.baseUrl}/learning_topscore_quiz/learningtopscore`,
     //   { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
     // );
-     return this.http.get('http://localhost:3000/dhiti/api/v1/learning_topscore_quiz/learningtopscore');
+    return this.http.get('http://localhost:3000/dhiti/api/v1/learning_topscore_quiz/learningtopscore');
   }
-  learningquiz(): Observable<any> {   
+  learningquiz(): Observable<any> {
     return this.http.get('http://localhost:3000/dhiti/api/v1/learning_group_participation_percentage/learning_group_participation_percentage')
     // return this.http.get('../../assets/learning_quiz.json');
   }
+
+  diff(data) {
+    return this.http.post('http://localhost:3000/dhiti/api/v1/calculate_diff/diff', { data });
+  }
+
 }

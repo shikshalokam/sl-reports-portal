@@ -23,9 +23,10 @@ const routes: Routes = [
         path: 'program-effectivness', component: ProgramEffectivenessComponent
       },
       {
-        path:'learning' ,component:LearningComponent
+        path: 'learning', component: LearningComponent
       }
- ]}
+    ]
+  }
 ];
 
 @NgModule({

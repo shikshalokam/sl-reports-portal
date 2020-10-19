@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
   markerData: any;
-  previousDate:any
+  previousDate: any
 
 
   mouseenter() {
@@ -66,36 +66,36 @@ export class HomeComponent implements OnInit {
     public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.homedata();
     var date = new Date();
     date.setDate(date.getDate() - 1);
     this.convert(date)
-   // var last = new Date(date.getTime() - (1 * 24 * 60 * 60 * 1000));
-   // this.previousDate =last;
+    // var last = new Date(date.getTime() - (1 * 24 * 60 * 60 * 1000));
+    // this.previousDate =last;
   }
   convert(str) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
-      this.previousDate=[day,mnth,date.getFullYear(),  ].join("-");
-      console.log(this.previousDate)
+    this.previousDate = [day, mnth, date.getFullYear(),].join("-");
+    console.log(this.previousDate)
     return this.previousDate
   }
-  
-  
+
+
 
   homedata() {
-this.service.topscorer().subscribe((response4) => {
+    this.service.topscorer().subscribe((response4) => {
       this.topscorer = response4;
       this.topscorer.sort((a, b) =>
         Number(a.topscore) < Number(b.topscore)
           ? 1
           : Number(b.topscore) < Number(a.topscore)
-          ? -1
-          : 0
+            ? -1
+            : 0
       );
 
       this.barChart(this.topscorer);
@@ -103,19 +103,19 @@ this.service.topscorer().subscribe((response4) => {
         this.applogin = response2;
         this.appcount(this.applogin);
 
-this.service.averagetimespent().subscribe((response3) => {
+        this.service.averagetimespent().subscribe((response3) => {
           this.averagetimespent = response3;
           this.growth_in_minutes = this.averagetimespent[0].growth_in_minutes;
           this.minutes_time = this.averagetimespent[0].minutes_time;
-        
-this.service.app_percentage().subscribe((response1) => {
+
+          this.service.app_percentage().subscribe((response1) => {
             this.apppercentage = response1;
             this.lineChart(this.apppercentage);
-this.service.top5basedratedcontent().subscribe((response5) => {
+            this.service.top5basedratedcontent().subscribe((response5) => {
               this.worddata = response5;
-             
+
               //////////////map-data///////////////////////
-this.service.map_data().subscribe((res) => {
+              this.service.map_data().subscribe((res) => {
                 this.markerData = res;
                 data.default['features'].forEach((element) => {
                   this.markerData.forEach((prop) => {
@@ -135,7 +135,7 @@ this.service.map_data().subscribe((res) => {
                 this.initMap(data.default['features'], 'map');
 
                 ///////////////////////map-login///////////////
-this.service.map_loginpercentage().subscribe((res) => {
+                this.service.map_loginpercentage().subscribe((res) => {
                   this.markerData = res;
                   data.default['features'].forEach((element) => {
                     this.markerData.forEach((prop) => {
@@ -153,7 +153,7 @@ this.service.map_loginpercentage().subscribe((res) => {
                     }
                   });
 
-                  this.initMapcontainer( data.default['features'],'mapContainer');
+                  this.initMapcontainer(data.default['features'], 'mapContainer');
                 });
 
                 //////////////////////////////////////////////
@@ -170,7 +170,7 @@ this.service.map_loginpercentage().subscribe((res) => {
   initMapcontainer(data, id) {
     const lat = 15.999337593805994;
     const lng = 80.95896916007721;
-    globalMap = L.map(id, { zoomControl: false }).setView([lat, lng], 6);
+    globalMap = L.map(id, { zoomControl: false }).setView([lat, lng], 5);
     applyCountryBorder(globalMap);
     function applyCountryBorder(map) {
       L.geoJSON(data, {
@@ -190,10 +190,10 @@ this.service.map_loginpercentage().subscribe((res) => {
       }
     ).addTo(globalMap);
 
-    data.sort((a, b) =>Number(a.properties.login_percentage) >Number(b.properties.login_percentage)? 1
-        : Number(b.properties.login_percentage) >Number(a.properties.login_percentage)? -1: 0
+    data.sort((a, b) => Number(a.properties.login_percentage) > Number(b.properties.login_percentage) ? 1
+      : Number(b.properties.login_percentage) > Number(a.properties.login_percentage) ? -1 : 0
     );
-    var colors: any = this.color().generateGradient('#FF0000','#7FFF00',data.length,'rgb');
+    var colors: any = this.color().generateGradient('#FF0000', '#7FFF00', data.length, 'rgb');
 
     var i = 0;
     var index;
@@ -227,10 +227,10 @@ this.service.map_loginpercentage().subscribe((res) => {
       }).setContent(
         layer.feature.properties
           ? 'District Name : ' +
-              layer.feature.properties['District Name'] +
-              '<br />' +
-              'Login Percentage : ' +
-              layer.feature.properties['login_percentage']
+          layer.feature.properties['District Name'] +
+          '<br />' +
+          'Login Percentage : ' +
+          layer.feature.properties['login_percentage']
           : 'Hover over a state'
       );
       layer.addTo(globalMap).bindPopup(popup);
@@ -254,7 +254,7 @@ this.service.map_loginpercentage().subscribe((res) => {
   initMap(data, id) {
     const lat = 15.999337593805994;
     const lng = 80.95896916007721;
-    globalMap = L.map(id, { zoomControl: false }).setView([lat, lng], 6);
+    globalMap = L.map(id, { zoomControl: false }).setView([lat, lng], 5);
     applyCountryBorder(globalMap);
     function applyCountryBorder(map) {
       L.geoJSON(data, {
@@ -279,10 +279,10 @@ this.service.map_loginpercentage().subscribe((res) => {
         ? 1
         : Number(b.properties.numofResources) >
           Number(a.properties.numofResources)
-        ? -1
-        : 0
+          ? -1
+          : 0
     );
-    var colors: any = this.color().generateGradient('#FF0000','#7FFF00',data.length,'rgb');
+    var colors: any = this.color().generateGradient('#FF0000', '#7FFF00', data.length, 'rgb');
 
     var i = 0;
     var index;
@@ -316,10 +316,10 @@ this.service.map_loginpercentage().subscribe((res) => {
       }).setContent(
         layer.feature.properties
           ? 'District Name : ' +
-              layer.feature.properties['District Name'] +
-              '<br />' +
-              'Number of resources : ' +
-              layer.feature.properties['numofResources']
+          layer.feature.properties['District Name'] +
+          '<br />' +
+          'Number of resources : ' +
+          layer.feature.properties['numofResources']
           : 'Hover over a state'
       );
       layer.addTo(globalMap).bindPopup(popup);
@@ -337,13 +337,13 @@ this.service.map_loginpercentage().subscribe((res) => {
       onEachFeature: onEachFeature,
     }).addTo(globalMap);
     globalMap.on('click', this.onMapClick);
-  
-  
+
+
   }
-  
+
 
   onMapClick(e) {
-   // console.log(e);
+    // console.log(e);
   }
 
   // color gredient generation....
@@ -353,10 +353,10 @@ this.service.map_loginpercentage().subscribe((res) => {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
       return result
         ? [
-            parseInt(result[1], 16),
-            parseInt(result[2], 16),
-            parseInt(result[3], 16),
-          ]
+          parseInt(result[1], 16),
+          parseInt(result[2], 16),
+          parseInt(result[3], 16),
+        ]
         : null;
     }
 
@@ -451,14 +451,14 @@ this.service.map_loginpercentage().subscribe((res) => {
         type: 'spline',
       },
       title: {
-        text:'<span style="font-size: 16px ;font-family: Segoe UI ; color:black">Daily Activity Growth By App</span>',
+        text: '<span style="font-size: 16px ;font-family: Segoe UI ; color:black">Daily Activity Growth By App</span>',
 
       },
       xAxis: {
         categories: date,
       },
       yAxis: {
-       
+
       },
       series: [
         {
@@ -511,12 +511,14 @@ this.service.map_loginpercentage().subscribe((res) => {
           text: '',
         },
       },
+      
       plotOptions: {
         bar: {
           dataLabels: {
             enabled: true,
           },
         },
+        
       },
       series: [
         {
@@ -524,7 +526,9 @@ this.service.map_loginpercentage().subscribe((res) => {
           name:
             '<span style="font-size: 16px ;font-family: Segoe UI">Total Score</span>',
           data: TotalScore,
+          showInLegend: false,
         },
+        
       ],
       exporting: {
         enabled: true,

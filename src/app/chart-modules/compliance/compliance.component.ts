@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
-import * as Highcharts from 'highcharts';
+// import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-compliance',
@@ -367,6 +367,7 @@ export class ComplianceComponent implements OnInit {
             '<span style="font-size: 16px ;font-family: Segoe UI">User Count</span> ',
 
           data: users_never_logged_in,
+          showInLegend: false
         },
       ],
     });
