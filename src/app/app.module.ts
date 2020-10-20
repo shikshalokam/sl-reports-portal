@@ -10,6 +10,8 @@ import { PortalCoreModule } from './modules/portal-core/portal-core.module';
 import { PortalSharedModule } from './modules/portal-shared/portal-shared.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { CoreModuleModule } from 'shikshalokam';
+import { NgSelectModule } from "@ng-select/ng-select";
+
 import {
   TranslateModule,
   TranslateLoader,
@@ -59,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PortalSharedModule,
     MatMenuModule,
     CoreModuleModule,
+    NgSelectModule,
     TranslateModule.forChild(),
     TranslateModule.forRoot({
       loader: {

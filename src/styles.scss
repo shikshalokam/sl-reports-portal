@@ -4,6 +4,8 @@
 @import "./assets/scss/variables.scss";
 
 @import "~leaflet/dist/leaflet.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@ng-select/ng-select/themes/material.theme.css";
 
 app-root{
   font-family: 'Segoe UI';

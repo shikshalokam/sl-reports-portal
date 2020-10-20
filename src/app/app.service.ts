@@ -85,14 +85,30 @@ export class AppServiceComponent {
     );
   }
   topscoreinquiz(): Observable<any> {
-    // return this.http.get(
-    //   `${this.baseUrl}/learning_topscore_quiz/learningtopscore`,
-    //   { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
-    // );
-     return this.http.get('http://localhost:3000/dhiti/api/v1/learning_topscore_quiz/learningtopscore');
+    return this.http.get(
+      `${this.baseUrl}/learning_topscore_quiz/learningtopscore`,
+      { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
+    );
   }
   learningquiz(): Observable<any> {   
-    return this.http.get('http://localhost:3000/dhiti/api/v1/learning_group_participation_percentage/learning_group_participation_percentage')
-    // return this.http.get('../../assets/learning_quiz.json');
+    return this.http.get(
+      `${this.baseUrl}/learning_group_participation_percentage/learning_group_participation_percentage`,
+      { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
+    );
+   
   }
+  view_resource() {
+    // return this.http.get('http://localhost:3000/dhiti/api/v1/adoption_fetching_data/adoption_fetching_data')
+
+    return this.http.get('../../assets/viewedallresource.json')
+  }
+  resource(data):Observable<any>{
+    // return this.http.post(`http://localhost:3000/api/adoptionone_resource`,data)
+    // return this.http.post(`http://localhost:3000/dhiti/api/v1/adoption_resources/adoption_resources`,data)
+    return this.http.post(`http://localhost:3000/dhiti/api/v1/adoption_fetching_data/adoption`,data)
+   
+ 
+  }
+
+    
 }

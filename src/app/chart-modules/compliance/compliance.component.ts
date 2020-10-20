@@ -19,6 +19,17 @@ export class ComplianceComponent implements OnInit {
   data: any[];
   barChart1: Chart;
   userneverloggedin: any;
+  barchart: Chart;
+  public keys;
+  dropdownList = [];
+  public dropdownList1 = [];
+  selectedItems = [];
+  dropdownSettings = {};
+  requiredField: boolean = false;
+  complianceallresource: any = [];
+  public resource: any;
+  allresourcenames: any = [];
+  selectedItemsED: any;
 
   constructor(
     public http: HttpClient,
@@ -32,21 +43,82 @@ export class ComplianceComponent implements OnInit {
   compliance() {
     this.service.NeverLoggedIn().subscribe((res) => {
       this.userneverloggedin = res;
-      this.userneverloggedin.sort((a, b) =>Number(a.users_never_logged_in) < Number(b.users_never_logged_in)? 1
-      : Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
+      this.userneverloggedin.sort((a, b) =>
+Number(a.users_never_logged_in) < Number(b.users_never_logged_in)? 1: 
+Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
       this.barChart(this.userneverloggedin);
 
       this.service.login_trend().subscribe((res) => {
         this.logintrend = res;
+        console.log(this.logintrend);
+        this.keys = Object.keys(this.logintrend[0]);
         this.lineChart1(this.logintrend);
 
         this.service.app_count().subscribe((res) => {
           this.appcount = res;
           this.lineChart2(this.appcount);
+          this.service.view_resource().subscribe((res) => {
+            this.resource = res;
+            this.complianceallresource = this.resource
+              .map((value) => value['Contentviewed'])
+              .filter((value, index, _arr) => _arr.indexOf(value) == index);
+            for (var i = 0; i < this.complianceallresource.length; i++) {
+              this.dropdownList1.push({
+                item_id: i + 1,
+                item_text: this.complianceallresource[i],
+              });
+              this.dropdownList = this.dropdownList1;
+              this.selectedItemsED = ['Resource1', 'Resource3'];
+            }
+            this.onItemSelect(this.selectedItemsED);
+          });
         });
       });
     });
   }
+  ////////////////////////////////
+  onItemSelect(item: any) {
+    console.log('select----------' + JSON.stringify(item));
+    this.service.resource(item).subscribe((res) => {
+      // console.log(res);
+      this.Barchart(res);
+    });
+  }
+  Barchart(result) {
+    this.barchart = new Chart({
+      colors: ['rgb(124, 181, 236)'],
+      chart: {
+        type: 'column',
+      },
+      title: {
+        text:
+          '<span style="font-size: 16px ;font-family: Segoe UI">User viewed all resources</span>',
+      },
+      xAxis: {
+        categories: ['GroupID'],
+      },
+      yAxis: {
+        title: {
+          text: 'Count',
+        },
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true,
+          },
+        },
+        series: {},
+      },
+      series: result,
+
+      exporting: {
+        enabled: false,
+      },
+    });
+  }
+
+  ///////////////////////////////
 
   lineChart1(result) {
     var date = [];
@@ -74,33 +146,35 @@ export class ComplianceComponent implements OnInit {
     var role22 = [];
     var role23 = [];
     var role24 = [];
+    var role25 = [];
 
     for (var i = 0; i < result.length; i++) {
       date.push(result[i]['date']);
-      role1.push(parseInt(result[i]['APSWREIS-TGT 1']));
-      role2.push(parseInt(result[i]['APSWREIS-TGT2-1']));
-      role3.push(parseInt(result[i]['APSWREIS-TGT2-11']));
-      role4.push(parseInt(result[i]['APSWREIS-TGT2-12']));
-      role5.push(parseInt(result[i]['APSWREIS-TGT2-13']));
-      role6.push(parseInt(result[i]['APSWREIS-TGT2-15']));
-      role7.push(parseInt(result[i]['APSWREIS-TGT2-16']));
-      role8.push(parseInt(result[i]['APSWREIS-TGT2-17']));
-      role9.push(parseInt(result[i]['APSWREIS-TGT2-18']));
-      role10.push(parseInt(result[i]['APSWREIS-TGT2-2']));
-      role11.push(parseInt(result[i]['APSWREIS-TGT2-3']));
-      role12.push(parseInt(result[i]['APSWREIS-TGT2-5']));
-      role13.push(parseInt(result[i]['APSWREIS-TGT2-6']));
-      role14.push(parseInt(result[i]['APSWREIS-TGT2-7']));
-      role15.push(parseInt(result[i]['APSWREIS-TGT2-8']));
-      role16.push(parseInt(result[i]['APSWREIS-TGT2-9']));
-      role17.push(parseInt(result[i]['APSWREIS_G1']));
-      role18.push(parseInt(result[i]['APSWREIS_G2']));
-      role19.push(parseInt(result[i]['APSWREIS_G3']));
-      role20.push(parseInt(result[i]['APSWREIS_G4']));
-      role21.push(parseInt(result[i]['APSWREIS_G5']));
-      role22.push(parseInt(result[i]['APSWREIS_G6']));
-      role23.push(parseInt(result[i]['HM']));
-      role24.push(parseInt(result[i]['SGT']));
+      role1.push(parseInt(result[i]['<NULL>']));
+      role2.push(parseInt(result[i]['APSWREIS-TGT 1']));
+      role3.push(parseInt(result[i]['APSWREIS-TGT2-1']));
+      role4.push(parseInt(result[i]['APSWREIS-TGT2-11']));
+      role5.push(parseInt(result[i]['APSWREIS-TGT2-12']));
+      role6.push(parseInt(result[i]['APSWREIS-TGT2-13']));
+      role7.push(parseInt(result[i]['APSWREIS-TGT2-15']));
+      role8.push(parseInt(result[i]['APSWREIS-TGT2-16']));
+      role9.push(parseInt(result[i]['APSWREIS-TGT2-17']));
+      role10.push(parseInt(result[i]['APSWREIS-TGT2-18']));
+      role11.push(parseInt(result[i]['APSWREIS-TGT2-2']));
+      role12.push(parseInt(result[i]['APSWREIS-TGT2-3']));
+      role13.push(parseInt(result[i]['APSWREIS-TGT2-5']));
+      role14.push(parseInt(result[i]['APSWREIS-TGT2-6']));
+      role15.push(parseInt(result[i]['APSWREIS-TGT2-7']));
+      role16.push(parseInt(result[i]['APSWREIS-TGT2-8']));
+      role17.push(parseInt(result[i]['APSWREIS-TGT2-9']));
+      role18.push(parseInt(result[i]['APSWREIS_G1']));
+      role19.push(parseInt(result[i]['APSWREIS_G2']));
+      role20.push(parseInt(result[i]['APSWREIS_G3']));
+      role21.push(parseInt(result[i]['APSWREIS_G4']));
+      role22.push(parseInt(result[i]['APSWREIS_G5']));
+      role23.push(parseInt(result[i]['APSWREIS_G6']));
+      role24.push(parseInt(result[i]['HM']));
+      role25.push(parseInt(result[i]['SGT']));
     }
 
     this.linechart1 = new Chart({
@@ -123,146 +197,152 @@ export class ComplianceComponent implements OnInit {
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT 1',
+          name: this.keys[1],
           data: role1,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-1',
+          name: this.keys[2],
           data: role2,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-11',
+          name: this.keys[3],
           data: role3,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-12',
+          name: this.keys[4],
           data: role4,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-13',
+          name: this.keys[5],
           data: role5,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-15',
+          name: this.keys[6],
           data: role6,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-16',
+          name: this.keys[7],
           data: role7,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-17',
+          name: this.keys[8],
           data: role8,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-18',
+          name: this.keys[9],
           data: role9,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-2',
+          name: this.keys[10],
           data: role10,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-3',
+          name: this.keys[11],
           data: role11,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-5',
+          name: this.keys[12],
           data: role12,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-6',
+          name: this.keys[13],
           data: role13,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-7',
+          name: this.keys[14],
           data: role14,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-8',
+          name: this.keys[15],
           data: role15,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS-TGT2-9',
+          name: this.keys[16],
           data: role16,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS_G1',
+          name: this.keys[17],
           data: role17,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS_G2',
+          name: this.keys[18],
           data: role18,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS_G3',
+          name: this.keys[19],
           data: role19,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS_G4',
+          name: this.keys[20],
           data: role20,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS_G5',
+          name: this.keys[21],
           data: role21,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'APSWREIS_G6',
+          name: this.keys[22],
           data: role22,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'HM',
+          name: this.keys[23],
           data: role23,
         },
         {
           showInLegend: false,
           type: 'spline',
-          name: 'SGT',
+          name: this.keys[24],
           data: role24,
+        },
+        {
+          showInLegend: false,
+          type: 'spline',
+          name: this.keys[25],
+          data: role25,
         },
       ],
     });
@@ -361,11 +441,10 @@ export class ComplianceComponent implements OnInit {
       },
       series: [
         {
+          showInLegend: false,
           type: 'column',
-
           name:
             '<span style="font-size: 16px ;font-family: Segoe UI">User Count</span> ',
-
           data: users_never_logged_in,
         },
       ],
