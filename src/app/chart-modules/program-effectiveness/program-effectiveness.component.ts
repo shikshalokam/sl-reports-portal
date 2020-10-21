@@ -118,6 +118,7 @@ export class ProgramEffectivenessComponent implements OnInit, OnDestroy {
           name:
             '<span style="font-size: 16px ;font-family: Segoe UI">User Count</span>',
           data: topscore,
+          showInLegend: false
         },
       ],
       exporting: {
@@ -171,6 +172,7 @@ export class ProgramEffectivenessComponent implements OnInit, OnDestroy {
             '<span style="font-size: 16px ;font-family: Segoe UI">Average Rating</span>',
 
           data: average_rating,
+          showInLegend: false
         },
       ],
       exporting: {

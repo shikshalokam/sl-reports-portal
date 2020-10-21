@@ -30,6 +30,7 @@ export class ComplianceComponent implements OnInit {
   public resource: any;
   allresourcenames: any = [];
   selectedItemsED: any;
+  public GroupID = [];
 
   constructor(
     public http: HttpClient,
@@ -44,14 +45,16 @@ export class ComplianceComponent implements OnInit {
     this.service.NeverLoggedIn().subscribe((res) => {
       this.userneverloggedin = res;
       this.userneverloggedin.sort((a, b) =>
-Number(a.users_never_logged_in) < Number(b.users_never_logged_in)? 1: 
-Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
+        Number(a.users_never_logged_in) < Number(b.users_never_logged_in)
+          ? 1
+          : Number(b.users_never_logged_in) < Number(a.users_never_logged_in)
+          ? -1
+          : 0
+      );
       this.barChart(this.userneverloggedin);
 
       this.service.login_trend().subscribe((res) => {
         this.logintrend = res;
-        console.log(this.logintrend);
-        this.keys = Object.keys(this.logintrend[0]);
         this.lineChart1(this.logintrend);
 
         this.service.app_count().subscribe((res) => {
@@ -60,7 +63,7 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
           this.service.view_resource().subscribe((res) => {
             this.resource = res;
             this.complianceallresource = this.resource
-              .map((value) => value['Contentviewed'])
+              .map((value) => value['content_name'])
               .filter((value, index, _arr) => _arr.indexOf(value) == index);
             for (var i = 0; i < this.complianceallresource.length; i++) {
               this.dropdownList1.push({
@@ -68,7 +71,7 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
                 item_text: this.complianceallresource[i],
               });
               this.dropdownList = this.dropdownList1;
-              this.selectedItemsED = ['Resource1', 'Resource3'];
+              this.selectedItemsED = ['<NULL>'];
             }
             this.onItemSelect(this.selectedItemsED);
           });
@@ -77,14 +80,22 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
     });
   }
   ////////////////////////////////
+
   onItemSelect(item: any) {
-    console.log('select----------' + JSON.stringify(item));
     this.service.resource(item).subscribe((res) => {
-      // console.log(res);
       this.Barchart(res);
     });
   }
   Barchart(result) {
+    var viewallresource = [];
+    console.log(result);
+
+    for (let i = 0; i < result.length; i++) {
+      viewallresource.push(result[i]['data']);
+      this.GroupID.push(result[i]['name']);
+    }
+    console.log(viewallresource);
+
     this.barchart = new Chart({
       colors: ['rgb(124, 181, 236)'],
       chart: {
@@ -95,7 +106,7 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
           '<span style="font-size: 16px ;font-family: Segoe UI">User viewed all resources</span>',
       },
       xAxis: {
-        categories: ['GroupID'],
+        categories: this.GroupID,
       },
       yAxis: {
         title: {
@@ -108,9 +119,16 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
             enabled: true,
           },
         },
-        series: {},
       },
-      series: result,
+      series: [
+        {
+          showInLegend: false,
+          type: 'column',
+          name:
+            '<span style="font-size: 16px ;font-family: Segoe UI">User Count</span> ',
+          data: viewallresource,
+        },
+      ],
 
       exporting: {
         enabled: false,
@@ -121,60 +139,61 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
   ///////////////////////////////
 
   lineChart1(result) {
-    var date = [];
-    var role1 = [];
-    var role2 = [];
-    var role3 = [];
-    var role4 = [];
-    var role5 = [];
-    var role6 = [];
-    var role7 = [];
-    var role8 = [];
-    var role9 = [];
-    var role10 = [];
-    var role11 = [];
-    var role12 = [];
-    var role13 = [];
-    var role14 = [];
-    var role15 = [];
-    var role16 = [];
-    var role17 = [];
-    var role18 = [];
-    var role19 = [];
-    var role20 = [];
-    var role21 = [];
-    var role22 = [];
-    var role23 = [];
-    var role24 = [];
-    var role25 = [];
-
+    var date = [],
+      role1 = [],
+      role2 = [],
+      role3 = [],
+      role4 = [],
+      role5 = [],
+      role6 = [],
+      role7 = [],
+      role8 = [],
+      role9 = [],
+      role10 = [],
+      role11 = [],
+      role12 = [],
+      role13 = [],
+      role14 = [],
+      role15 = [],
+      role16 = [],
+      role17 = [],
+      role18 = [],
+      role19 = [],
+      role20 = [],
+      role21 = [],
+      role22 = [],
+      role23 = [],
+      role24 = [],
+      role25 = [];
+    this.keys = Object.keys(result[0]);
+    //  console.log(this.keys)
     for (var i = 0; i < result.length; i++) {
-      date.push(result[i]['date']);
-      role1.push(parseInt(result[i]['<NULL>']));
-      role2.push(parseInt(result[i]['APSWREIS-TGT 1']));
-      role3.push(parseInt(result[i]['APSWREIS-TGT2-1']));
-      role4.push(parseInt(result[i]['APSWREIS-TGT2-11']));
-      role5.push(parseInt(result[i]['APSWREIS-TGT2-12']));
-      role6.push(parseInt(result[i]['APSWREIS-TGT2-13']));
-      role7.push(parseInt(result[i]['APSWREIS-TGT2-15']));
-      role8.push(parseInt(result[i]['APSWREIS-TGT2-16']));
-      role9.push(parseInt(result[i]['APSWREIS-TGT2-17']));
-      role10.push(parseInt(result[i]['APSWREIS-TGT2-18']));
-      role11.push(parseInt(result[i]['APSWREIS-TGT2-2']));
-      role12.push(parseInt(result[i]['APSWREIS-TGT2-3']));
-      role13.push(parseInt(result[i]['APSWREIS-TGT2-5']));
-      role14.push(parseInt(result[i]['APSWREIS-TGT2-6']));
-      role15.push(parseInt(result[i]['APSWREIS-TGT2-7']));
-      role16.push(parseInt(result[i]['APSWREIS-TGT2-8']));
-      role17.push(parseInt(result[i]['APSWREIS-TGT2-9']));
-      role18.push(parseInt(result[i]['APSWREIS_G1']));
-      role19.push(parseInt(result[i]['APSWREIS_G2']));
-      role20.push(parseInt(result[i]['APSWREIS_G3']));
-      role21.push(parseInt(result[i]['APSWREIS_G4']));
-      role22.push(parseInt(result[i]['APSWREIS_G5']));
-      role23.push(parseInt(result[i]['APSWREIS_G6']));
-      role24.push(parseInt(result[i]['HM']));
-      role25.push(parseInt(result[i]['SGT']));
+      date.push(result[i][this.keys[0]]);
+      role1.push(Number(result[i][this.keys[1]]));
+      role2.push(Number(result[i][this.keys[2]]));
+      role3.push(Number(result[i][this.keys[3]]));
+      role4.push(Number(result[i][this.keys[4]]));
+      role5.push(Number(result[i][this.keys[5]]));
+      role6.push(Number(result[i][this.keys[6]]));
+      role7.push(Number(result[i][this.keys[7]]));
+      role8.push(Number(result[i][this.keys[8]]));
+      role9.push(Number(result[i][this.keys[9]]));
+      role10.push(Number(result[i][this.keys[10]]));
+      role11.push(Number(result[i][this.keys[11]]));
+      role12.push(Number(result[i][this.keys[12]]));
+      role13.push(Number(result[i][this.keys[13]]));
+      role14.push(Number(result[i][this.keys[14]]));
+      role15.push(Number(result[i][this.keys[15]]));
+      role16.push(Number(result[i][this.keys[16]]));
+      role17.push(Number(result[i][this.keys[17]]));
+      role18.push(Number(result[i][this.keys[18]]));
+      role19.push(Number(result[i][this.keys[19]]));
+      role20.push(Number(result[i][this.keys[20]]));
+      role21.push(Number(result[i][this.keys[21]]));
+      role22.push(Number(result[i][this.keys[22]]));
+      role23.push(Number(result[i][this.keys[23]]));
+      role24.push(Number(result[i][this.keys[24]]));
+      role25.push(Number(result[i][this.keys[25]]));
     }
 
     this.linechart1 = new Chart({
@@ -353,12 +372,13 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
     var bodh = [];
     var samiksha = [];
     var unnati = [];
-
+    var keys = Object.keys(result[0]);
+    //  console.log('------keys----',keys)
     for (var i = 0; i < result.length; i++) {
-      date.push(result[i]['date']);
-      bodh.push(parseInt(result[i]['bodh']));
-      samiksha.push(parseInt(result[i]['samiksha']));
-      unnati.push(parseInt(result[i]['unnati']));
+      date.push(result[i][keys[0]]);
+      bodh.push(parseInt(result[i][keys[1]]));
+      samiksha.push(parseInt(result[i][keys[2]]));
+      unnati.push(parseInt(result[i][keys[3]]));
     }
 
     this.linechart2 = new Chart({
@@ -381,22 +401,19 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
         {
           type: 'spline',
 
-          name:
-            '<span style="font-size: 16px ;font-family: Segoe UI">Bodh</span> ',
+          name: keys[1],
 
           data: bodh,
         },
         {
           type: 'spline',
 
-          name:
-            '<span style="font-size: 16px ;font-family: Segoe UI">Samiksha</span> ',
+          name: keys[2],
           data: samiksha,
         },
         {
           type: 'spline',
-          name:
-            '<span style="font-size: 16px ;font-family: Segoe UI">Unnati</span> ',
+          name: keys[3],
           data: unnati,
         },
       ],
@@ -405,13 +422,16 @@ Number(b.users_never_logged_in) < Number(a.users_never_logged_in)? -1: 0);
 
   ///////////////////////
   barChart(result) {
+    console.log(result);
+    var keys = Object.keys(result[0]);
+    // console.log('----keys---', keys);
     // console.log(result);
     var role_externalId = [];
     var users_never_logged_in = [];
 
     for (var i = 0; i < result.length; i++) {
-      role_externalId.push(result[i]['role_externalId']);
-      users_never_logged_in.push(Number(result[i]['users_never_logged_in']));
+      role_externalId.push(result[i][keys[0]]);
+      users_never_logged_in.push(Number(result[i][keys[1]]));
     }
 
     this.barChart1 = new Chart({

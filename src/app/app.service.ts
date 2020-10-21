@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
 export class AppServiceComponent {
   baseUrl = environment.apiEndpoint;
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   login_trend(): Observable<any> {
     return this.http.get(`${this.baseUrl}/login_trend/logintrend`, {
@@ -22,7 +22,7 @@ export class AppServiceComponent {
     return this.http.get(`${this.baseUrl}/app_login_count/applogincount`, {
       headers: { token: 'Bearer ' + localStorage.getItem('token') },
     });
-    
+
   }
   app_percentage(): Observable<any> {
     return this.http.get(`${this.baseUrl}/app_percentage/apppercentage`, {
@@ -90,25 +90,24 @@ export class AppServiceComponent {
       { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
     );
   }
-  learningquiz(): Observable<any> {   
-    return this.http.get(
-      `${this.baseUrl}/learning_group_participation_percentage/learning_group_participation_percentage`,
-      { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
-    );
-   
+  learningquiz(): Observable<any> {
+    return this.http.get('http://localhost:3000/dhiti/api/v1/learning_group_participation_percentage/learning_group_participation_percentage')
+  }
+
+  diff(data) {
+    return this.http.post('http://localhost:3000/dhiti/api/v1/calculate_diff/diff', { data });
   }
   view_resource() {
-    // return this.http.get('http://localhost:3000/dhiti/api/v1/adoption_fetching_data/adoption_fetching_data')
+    return this.http.get('http://localhost:3000/dhiti/api/v1/adoption_content/adoption_content')
 
-    return this.http.get('../../assets/viewedallresource.json')
+    // return this.http.get('../../assets/viewedallresource.json')
   }
   resource(data):Observable<any>{
     // return this.http.post(`http://localhost:3000/api/adoptionone_resource`,data)
     // return this.http.post(`http://localhost:3000/dhiti/api/v1/adoption_resources/adoption_resources`,data)
-    return this.http.post(`http://localhost:3000/dhiti/api/v1/adoption_fetching_data/adoption`,data)
+    return this.http.post(`http://localhost:3000/dhiti/api/v1/adoption_viewallresource/adoption`,data)
    
  
   }
 
-    
 }
