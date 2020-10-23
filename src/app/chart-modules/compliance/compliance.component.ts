@@ -30,7 +30,11 @@ export class ComplianceComponent implements OnInit {
   public resource: any;
   allresourcenames: any = [];
   selectedItemsED: any;
+  selectedItemsED1: any;
+  adoptionchart:Chart
+
   public GroupID = [];
+  public logintrendData=[];
 
   constructor(
     public http: HttpClient,
@@ -55,7 +59,13 @@ export class ComplianceComponent implements OnInit {
 
       this.service.login_trend().subscribe((res) => {
         this.logintrend = res;
-        this.lineChart1(this.logintrend);
+        this.keys= Object.keys(this.logintrend[0])
+        for(let i=2;i<this.keys.length;i++){
+          this.logintrendData.push({ item_id: i + 1,item_text: this.keys[i]})
+          this.selectedItemsED1 = ["APSWREIS-TGT 1","SGT"];
+        }
+        this.onItemSelect1(this.selectedItemsED1)
+        
 
         this.service.app_count().subscribe((res) => {
           this.appcount = res;
@@ -79,7 +89,54 @@ export class ComplianceComponent implements OnInit {
       });
     });
   }
-  ////////////////////////////////
+
+onItemSelect1(items){
+  this.service.adoption(items).subscribe((res)=>{
+    this.Linechart(res);
+  })
+
+
+}
+Linechart(result) {
+  var date = []
+  this.logintrend.forEach((cs)=>{
+    date.push(cs[this.keys[0]])
+  })
+  
+
+  this.adoptionchart = new Chart({
+    chart: {
+      type: 'line',
+    },
+    title: {
+      text:
+        '<span style="font-size: 16px ;font-family: Segoe UI">Daily Activity Percentage Per Group</span>',
+    },
+    xAxis: {
+      categories: date,
+    },
+    yAxis: {
+      title: {
+        text: 'Count',
+      },
+    },
+    plotOptions: {
+      bar: {
+        dataLabels: {
+          enabled: true,
+        },
+      },
+    },
+    series: result,
+
+    exporting: {
+      enabled: false,
+    },
+  });
+}
+
+
+
 
   onItemSelect(item: any) {
     this.service.resource(item).subscribe((res) => {
@@ -88,13 +145,11 @@ export class ComplianceComponent implements OnInit {
   }
   Barchart(result) {
     var viewallresource = [];
-    console.log(result);
 
     for (let i = 0; i < result.length; i++) {
       viewallresource.push(result[i]['data']);
       this.GroupID.push(result[i]['name']);
     }
-    console.log(viewallresource);
 
     this.barchart = new Chart({
       colors: ['rgb(124, 181, 236)'],
@@ -136,236 +191,6 @@ export class ComplianceComponent implements OnInit {
     });
   }
 
-  ///////////////////////////////
-
-  lineChart1(result) {
-    var date = [],
-      role1 = [],
-      role2 = [],
-      role3 = [],
-      role4 = [],
-      role5 = [],
-      role6 = [],
-      role7 = [],
-      role8 = [],
-      role9 = [],
-      role10 = [],
-      role11 = [],
-      role12 = [],
-      role13 = [],
-      role14 = [],
-      role15 = [],
-      role16 = [],
-      role17 = [],
-      role18 = [],
-      role19 = [],
-      role20 = [],
-      role21 = [],
-      role22 = [],
-      role23 = [],
-      role24 = [],
-      role25 = [];
-    this.keys = Object.keys(result[0]);
-    //  console.log(this.keys)
-    for (var i = 0; i < result.length; i++) {
-      date.push(result[i][this.keys[0]]);
-      role1.push(Number(result[i][this.keys[1]]));
-      role2.push(Number(result[i][this.keys[2]]));
-      role3.push(Number(result[i][this.keys[3]]));
-      role4.push(Number(result[i][this.keys[4]]));
-      role5.push(Number(result[i][this.keys[5]]));
-      role6.push(Number(result[i][this.keys[6]]));
-      role7.push(Number(result[i][this.keys[7]]));
-      role8.push(Number(result[i][this.keys[8]]));
-      role9.push(Number(result[i][this.keys[9]]));
-      role10.push(Number(result[i][this.keys[10]]));
-      role11.push(Number(result[i][this.keys[11]]));
-      role12.push(Number(result[i][this.keys[12]]));
-      role13.push(Number(result[i][this.keys[13]]));
-      role14.push(Number(result[i][this.keys[14]]));
-      role15.push(Number(result[i][this.keys[15]]));
-      role16.push(Number(result[i][this.keys[16]]));
-      role17.push(Number(result[i][this.keys[17]]));
-      role18.push(Number(result[i][this.keys[18]]));
-      role19.push(Number(result[i][this.keys[19]]));
-      role20.push(Number(result[i][this.keys[20]]));
-      role21.push(Number(result[i][this.keys[21]]));
-      role22.push(Number(result[i][this.keys[22]]));
-      role23.push(Number(result[i][this.keys[23]]));
-      role24.push(Number(result[i][this.keys[24]]));
-      role25.push(Number(result[i][this.keys[25]]));
-    }
-
-    this.linechart1 = new Chart({
-      chart: {
-        type: 'spline',
-      },
-      title: {
-        text:
-          '<span style="font-size: 16px ;font-family: Segoe UI">Daily Activity Percentage Per Group</span> ',
-      },
-      xAxis: {
-        categories: date,
-      },
-      yAxis: {
-        title: {
-          text: 'Percenetage',
-        },
-      },
-      series: [
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[1],
-          data: role1,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[2],
-          data: role2,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[3],
-          data: role3,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[4],
-          data: role4,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[5],
-          data: role5,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[6],
-          data: role6,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[7],
-          data: role7,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[8],
-          data: role8,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[9],
-          data: role9,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[10],
-          data: role10,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[11],
-          data: role11,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[12],
-          data: role12,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[13],
-          data: role13,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[14],
-          data: role14,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[15],
-          data: role15,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[16],
-          data: role16,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[17],
-          data: role17,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[18],
-          data: role18,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[19],
-          data: role19,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[20],
-          data: role20,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[21],
-          data: role21,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[22],
-          data: role22,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[23],
-          data: role23,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[24],
-          data: role24,
-        },
-        {
-          showInLegend: false,
-          type: 'spline',
-          name: this.keys[25],
-          data: role25,
-        },
-      ],
-    });
-  }
   /////////////////////////
   lineChart2(result) {
     var date = [];
@@ -373,7 +198,6 @@ export class ComplianceComponent implements OnInit {
     var samiksha = [];
     var unnati = [];
     var keys = Object.keys(result[0]);
-    //  console.log('------keys----',keys)
     for (var i = 0; i < result.length; i++) {
       date.push(result[i][keys[0]]);
       bodh.push(parseInt(result[i][keys[1]]));
@@ -420,12 +244,8 @@ export class ComplianceComponent implements OnInit {
     });
   }
 
-  ///////////////////////
   barChart(result) {
-    console.log(result);
     var keys = Object.keys(result[0]);
-    // console.log('----keys---', keys);
-    // console.log(result);
     var role_externalId = [];
     var users_never_logged_in = [];
 
@@ -440,7 +260,7 @@ export class ComplianceComponent implements OnInit {
       },
       title: {
         text:
-          '<span style="font-size: 16px ;font-family: Segoe UI"># of people who never logged in per group</span> ',
+          '<span style="font-size: 16px ;font-family: Segoe UI"># of people who were not active last month</span> ',
       },
       xAxis: {
         categories: role_externalId,
@@ -471,5 +291,4 @@ export class ComplianceComponent implements OnInit {
     });
   }
 
-  ////////////////////
 }

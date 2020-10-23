@@ -2,14 +2,18 @@
   <div class="row">
     <div class="col-sm-6" >
       <div class="col-md-12" style="border:2px solid #D3D3D3">
-      <div [chart]="linechart1"></div>
+        <ng-select class="custom" placeholder="select please ..." [(ngModel)]="selectedItemsED1" (change)="onItemSelect1($event)"
+        [multiple]="true" >
+        <ng-option *ngFor="let car of logintrendData" [value]="car.item_text" style=" font-size: 11px;">{{car.item_text}}</ng-option>
+      </ng-select>
+      <div [chart]="adoptionchart"></div>
     </div>
 
     </div>
     <div class="col-sm-6">
       <div class="col-md-12" style="border:2px solid #D3D3D3">
 
-      <div [chart]="barChart1"></div>
+      <div [chart]="barChart1" style="height: 58.7vh;" ></div>
     </div>
 
     </div>

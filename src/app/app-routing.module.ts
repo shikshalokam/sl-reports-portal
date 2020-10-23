@@ -5,6 +5,7 @@ import { ComplianceComponent } from './chart-modules/compliance/compliance.compo
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProgramEffectivenessComponent } from './chart-modules/program-effectiveness/program-effectiveness.component';
 import { LearningComponent } from './chart-modules/learning/learning.component';
+import { EngagementComponent } from './chart-modules/engagement/engagement.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,9 @@ const routes: Routes = [
       },
       {
         path: 'learning', component: LearningComponent
+      },
+      {
+        path:'engagement', component:EngagementComponent
       }
     ]
   }

@@ -504,7 +504,7 @@ export class HomeComponent implements OnInit {
       },
       title: {
         text:
-          '<span style="font-size: 16px ;font-family: Segoe UI; color:black">Top Scores in All Quizzes</span> ',
+          '<span style="font-size: 16px ;font-family: Segoe UI; color:black">Top scorers in all quizzes (Last 6 Months)</span> ',
       },
       xAxis: {
         categories: User_FirstName,

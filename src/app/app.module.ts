@@ -35,6 +35,7 @@ const  wordcloud = require('highcharts/modules/wordcloud.src')
 import * as Highcharts from 'highcharts';
 import { ProgramEffectivenessComponent } from './chart-modules/program-effectiveness/program-effectiveness.component';
 import { LearningComponent } from './chart-modules/learning/learning.component';
+import { EngagementComponent } from './chart-modules/engagement/engagement.component';
 exporting(Highcharts);
 exportdata(Highcharts);
 wordcloud(Highcharts);
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MainscreenComponent,
     ProgramEffectivenessComponent,
     LearningComponent,
+    EngagementComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
 export class AppServiceComponent {
   baseUrl = environment.apiEndpoint;
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {}
 
   login_trend(): Observable<any> {
     return this.http.get(`${this.baseUrl}/login_trend/logintrend`, {
@@ -22,7 +22,6 @@ export class AppServiceComponent {
     return this.http.get(`${this.baseUrl}/app_login_count/applogincount`, {
       headers: { token: 'Bearer ' + localStorage.getItem('token') },
     });
-
   }
   app_percentage(): Observable<any> {
     return this.http.get(`${this.baseUrl}/app_percentage/apppercentage`, {
@@ -85,29 +84,40 @@ export class AppServiceComponent {
     );
   }
   topscoreinquiz(): Observable<any> {
-    return this.http.get(
-      `${this.baseUrl}/learning_topscore_quiz/learningtopscore`,
-      { headers: { token: 'Bearer ' + localStorage.getItem('token') } }
-    );
+    return this.http.get(`${this.baseUrl}/learning_topscore_quiz/learningtopscore`,
+    { headers: { token: 'Bearer ' + localStorage.getItem('token') } });
   }
   learningquiz(): Observable<any> {
-    return this.http.get('http://localhost:3000/dhiti/api/v1/learning_group_participation_percentage/learning_group_participation_percentage')
+    
+    return this.http.get(`${this.baseUrl}/learning_group_participation_percentage/learning_group_participation_percentage`,
+    { headers: { token: 'Bearer ' + localStorage.getItem('token') } });
+
   }
 
-  diff(data) {
-    return this.http.post('http://localhost:3000/dhiti/api/v1/calculate_diff/diff', { data });
-  }
-  view_resource() {
-    return this.http.get('http://localhost:3000/dhiti/api/v1/adoption_content/adoption_content')
+  diff(data): Observable<any> {
 
-    // return this.http.get('../../assets/viewedallresource.json')
+    return this.http.post(`${this.baseUrl}/calculate_diff/diff`,{data},
+    { headers: { token: 'Bearer ' + localStorage.getItem('token') } });
+
   }
-  resource(data):Observable<any>{
-    // return this.http.post(`http://localhost:3000/api/adoptionone_resource`,data)
-    // return this.http.post(`http://localhost:3000/dhiti/api/v1/adoption_resources/adoption_resources`,data)
-    return this.http.post(`http://localhost:3000/dhiti/api/v1/adoption_viewallresource/adoption`,data)
-   
+  view_resource(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/adoption_content/adoption_content`,
+    { headers: { token: 'Bearer ' + localStorage.getItem('token') } });
+  }
+  resource(data): Observable<any> {
+    return this.http.post(`${this.baseUrl}/adoption_viewallresource/adoption`,data,
+    { headers: { token: 'Bearer ' + localStorage.getItem('token') } });
+
  
   }
+ 
+  engagement(): Observable<any> {
+    return this.http.get('../../assets/engagement.json');
+  }
+  adoption(data):Observable<any>{
+    return this.http.post(`${this.baseUrl}/adoption_multiselect/multiSelection`,data,
+    { headers: { token: 'Bearer ' + localStorage.getItem('token') } });
 
+ 
+  }
 }
