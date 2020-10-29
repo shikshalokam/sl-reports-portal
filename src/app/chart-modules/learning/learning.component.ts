@@ -95,6 +95,19 @@ export class LearningComponent implements OnInit {
 
       }
     });
+    this.ParticipationPercentage = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
+    this.ScorePercentage = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
+   
+    this.ParticipationPer(this.ParticipationPercentage)
+    this.ScorePer(this.ScorePercentage)
+
+    this.service.diff({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
+      this.difference1([{ name: "Variance", data: res, showInLegend: false, pointWidth: 50 }]);
+    })
+
+    this.service.diff({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
+      this.difference2([{ name: "Variance", data: res, showInLegend: false, pointWidth: 50 }]);
+    })
   }
   learningupdateValues2(learningQuiz) {
     this.selected2 = learningQuiz

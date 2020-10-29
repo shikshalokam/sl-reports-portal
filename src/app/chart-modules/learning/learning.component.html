@@ -2,6 +2,8 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="col-md-12" style="border:2px solid #d3d3d3">
+        <p style="text-align: center; font: size 16px;">Best Performers in Yesterday's Quiz</p>
+
         <select id="resource" [(ngModel)]="QuizNameSelected" name="QuizNameSelected"
           (change)="updateValues(QuizNameSelected)">
           <option [value]="QuizNameSelected" disabled selected="selected">Choose a QuizName</option>

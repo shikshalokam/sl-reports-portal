@@ -1,43 +1,31 @@
-<div class="container-fluid" >
+<div class="container-fluid">
   <div class="row">
-    <div class="col-sm-6" >
+    <div class="col-sm-6">
       <div class="col-md-12" style="border:2px solid #D3D3D3">
-        <ng-select class="custom" placeholder="select please ..." [(ngModel)]="selectedItemsED1" (change)="onItemSelect1($event)"
-        [multiple]="true" >
-        <ng-option *ngFor="let car of logintrendData" [value]="car.item_text" style=" font-size: 11px;">{{car.item_text}}</ng-option>
-      </ng-select>
-      <div [chart]="adoptionchart"></div>
-    </div>
+       <app-percentage-pergroup></app-percentage-pergroup>
+      </div>
 
     </div>
     <div class="col-sm-6">
       <div class="col-md-12" style="border:2px solid #D3D3D3">
+        <app-userneverloggedin></app-userneverloggedin>
 
-      <div [chart]="barChart1" style="height: 58.7vh;" ></div>
-    </div>
+      </div>
 
     </div>
   </div>
   <div class="row" style="margin-top: 4%;">
     <div class="col-sm-6">
       <div class="col-md-12" style="border:2px solid #D3D3D3 ;">
-      <div [chart]="linechart2" style="height: 66vh;"></div>
-    </div>
+        <app-dailyactive-perapp></app-dailyactive-perapp>
+      </div>
 
     </div>
     <div class="col-sm-6" style="border:2px solid #D3D3D3">
-      <ng-select class="custom" placeholder="select please ..." [(ngModel)]="selectedItemsED" (change)="onItemSelect($event)"
-  [multiple]="true" >
-  <ng-option *ngFor="let car of dropdownList" [value]="car.item_text" style=" font-size: 11px;">{{car.item_text}}</ng-option>
-</ng-select>
-<div class="row">
-  <div class="col-sm-12" >
-    <div [chart]="barchart"></div>
-  </div>
-</div>  
+     <app-viewall-resource></app-viewall-resource>
     </div>
 
   </div>
-  
+
 
 </div>

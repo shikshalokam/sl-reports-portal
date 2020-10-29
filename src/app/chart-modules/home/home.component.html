@@ -1,92 +1,73 @@
-    <div class="container-fluid" style="font-family: 'Segoe UI'">
-      <div class="row" style="font-size: 16px ">
-        <div class="col-sm-2">
-          <span>Unique Active Users :</span> </div>
-        <div class="col-sm-1">
-          <span> Bodh: {{ bodhCount }} </span>
-        </div>
-        <div class="col-sm-1">
-          <span > Unnati: {{ unnatiCount }} </span>
-        </div>
-        <div class="col-sm-2">
-          <span> Samiksha: {{ samikshaCount }} </span>
-        </div>
-        <div class="col-sm-3">
-          <p style="font-size: 16px ">Average Time Spent 
-            <span style="text-align: center; font-size: 16px">Bodh: {{growth_in_minutes}}
-              <td style="font-size: 12px;" [ngClass]="{'positive' : minutes_time > 0,'negative' : minutes_time < 0}">
-                [{{minutes_time}}]</td> </span>
-          </p>
-        </div>
-        <div class="col-sm-3">
-          <p style="font-size: 16px ">Last Updated On:{{previousDate}} </p>
+<div class="container-fluid" style="font-family: 'Segoe UI'">
+  <div class="row" style="font-size: 16px ">
+    <div class="col-sm-2">
+      <span>Unique Active Users :</span> </div>
+    <div class="col-sm-1">
+      <span> Bodh: {{ bodhCount }} </span>
+    </div>
+    <div class="col-sm-1">
+      <span> Unnati: {{ unnatiCount }} </span>
+    </div>
+    <div class="col-sm-2">
+      <span> Samiksha: {{ samikshaCount }} </span>
+    </div>
+    <div class="col-sm-3">
+      <p style="font-size: 16px ">Average Time Spent
+        <span style="text-align: center; font-size: 16px">Bodh: {{growth_in_minutes}}
+          <td style="font-size: 12px;" [ngClass]="{'positive' : minutes_time > 0,'negative' : minutes_time < 0}">
+            [{{minutes_time}}]</td> </span>
+      </p>
+    </div>
+    <div class="col-sm-3">
+      <p style="font-size: 16px ">Last Updated On:{{previousDate}} </p>
 
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        
-        <div class="col-sm-8">
-          <div class="col-md-12" style="border:2px solid #D3D3D3">
-            <div style="height:72.5vh" class="active" [chart]="linechart"></div>
-          </div>
-           </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
 
-     <div class="col-sm-4">
-      <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:73vh">
-          <div class="row">
-            <div class="col-sm-12">
-              
-              <p style="text-align: center; font-size: 16px ">No of Resources per District Last Month </p>
-              <div #map id="map" class="active" style="height: 28vh; width: 100%"></div>
-              
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm-12 " style="margin-top: 2%;">
-              <p style="text-align: center; font-size: 16px">Last Week Activity Percentage per District </p>
-              <div #map id="mapContainer" class="active" style="height: 28vh; width:100%"></div>
-
-            </div>
-          </div>
-
-     </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="row">
-
-        <div class="col-sm-6" style="margin-top:3%;">
-          <div class="col-md-12" style="border:2px solid #D3D3D3">
-            <div style="height:57.7vh" class="active" [chart]="barchart"></div>
-
-         </div>
-        </div>
-
-        <div class="col-sm-6" style="margin-top: 3%;">
-          <div class="col-md-12" style="border:2px solid #D3D3D3">
-          <p style="text-align: center; font-size:16px">Average Rating for Content Last Month</p>
-          <table class="table table-bordered" >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Average Rating</th>
-               
-              </tr>
-            </thead>
-            <tbody >
-              <tr *ngFor="let cs of worddata; index as i"  >
-                <td>{{ cs['name'] }}</td>
-                <td>{{ cs['average_rating'] }}</td>
-                
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        </div>
+    <div class="col-sm-8">
+      <div class="col-md-12" style="border:2px solid #D3D3D3">
+        <app-dailyactivity-growth></app-dailyactivity-growth>
       </div>
     </div>
+
+    <div class="col-sm-4">
+      <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:73vh">
+        <div class="row">
+          <div class="col-sm-12">
+
+            <app-resources-perdistrict></app-resources-perdistrict>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 " style="margin-top: 2%;">
+            <app-activitypercentage-perdistrict></app-activitypercentage-perdistrict>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-sm-6" style="margin-top:3%;">
+      <div class="col-md-12" style="border:2px solid #D3D3D3">
+        <app-topscore-allquizzes></app-topscore-allquizzes>
+      </div>
+    </div>
+
+    <div class="col-sm-6" style="margin-top: 3%;">
+      <div class="col-md-12" style="border:2px solid #D3D3D3">
+
+        <app-averagerating-content></app-averagerating-content>
+      </div>
+
+    </div>
+  </div>
+</div>

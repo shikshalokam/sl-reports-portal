@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+
+
 import { AppComponent } from './app.component';
 import { KeycloakAngularModule } from 'keycloak-angular';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
@@ -36,6 +38,17 @@ import * as Highcharts from 'highcharts';
 import { ProgramEffectivenessComponent } from './chart-modules/program-effectiveness/program-effectiveness.component';
 import { LearningComponent } from './chart-modules/learning/learning.component';
 import { EngagementComponent } from './chart-modules/engagement/engagement.component';
+import { TopratedResourceComponent } from './chart-modules/toprated-resource/toprated-resource.component';
+import { UserratingBreakdownComponent } from './chart-modules/userrating-breakdown/userrating-breakdown.component';
+import { PercentagePergroupComponent } from './chart-modules/percentage-pergroup/percentage-pergroup.component';
+import { UserneverloggedinComponent } from './chart-modules/userneverloggedin/userneverloggedin.component';
+import { DailyactivePerappComponent } from './chart-modules/dailyactive-perapp/dailyactive-perapp.component';
+import { ViewallResourceComponent } from './chart-modules/viewall-resource/viewall-resource.component';
+import { DailyactivityGrowthComponent } from './chart-modules/dailyactivity-growth/dailyactivity-growth.component';
+import { AverageratingContentComponent } from './chart-modules/averagerating-content/averagerating-content.component';
+import { TopscoreAllquizzesComponent } from './chart-modules/topscore-allquizzes/topscore-allquizzes.component';
+import { ResourcesPerdistrictComponent } from './chart-modules/resources-perdistrict/resources-perdistrict.component';
+import { ActivitypercentagePerdistrictComponent } from './chart-modules/activitypercentage-perdistrict/activitypercentage-perdistrict.component';
 exporting(Highcharts);
 exportdata(Highcharts);
 wordcloud(Highcharts);
@@ -53,7 +66,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProgramEffectivenessComponent,
     LearningComponent,
     EngagementComponent,
-  ],
+    TopratedResourceComponent,
+    UserratingBreakdownComponent,
+    PercentagePergroupComponent,
+    UserneverloggedinComponent,
+    DailyactivePerappComponent,
+    ViewallResourceComponent,
+    DailyactivityGrowthComponent,
+    AverageratingContentComponent,
+    TopscoreAllquizzesComponent,
+    ResourcesPerdistrictComponent,
+    ActivitypercentagePerdistrictComponent,
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,ChartModule,
@@ -75,6 +99,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidebarModule,
 
     ChartModule,
+
+
+
+   
+
+   
   ],
   entryComponents: [AppComponent],
   providers: [

@@ -7,45 +7,44 @@ import * as Highcharts from 'highcharts';
 @Component({
   selector: 'app-engagement',
   templateUrl: './engagement.component.html',
-  styleUrls: ['./engagement.component.scss']
+  styleUrls: ['./engagement.component.scss'],
 })
 export class EngagementComponent implements OnInit {
-public data:any
-public GroupID = [];
-engagementchart:Chart
-public engagementData = []
-  constructor( public http: HttpClient,
-    public service: AppServiceComponent,) { }
+  public data: any;
+  public GroupID = [];
+  engagementchart: Chart;
+ public output1 = []
+ public output2=[]
+  public engagementData ;
+  constructor(public http: HttpClient, public service: AppServiceComponent) {}
 
   ngOnInit() {
-    this.service.engagement().subscribe((res)=>{
-      this.data=res;
-      this.EngagementBarchart(this.data)
-    })
-    
+    this.service.engagement().subscribe((res) => {
+      this.EngagementBarchart(res);
+    });
   }
 
   EngagementBarchart(result) {
-    var Group1=[] , Group2=[],Group3=[],Group4=[], Group5=[],Group6=[],Group7=[],BenchMarkTimeTaken=[]
-    var keys = Object.keys(result[0])
-    for (let i = 0; i < result.length; i++) {
-      this.GroupID.push(result[i][keys[0]]);
-      Group1.push(result[i][keys[1]])
-      Group2.push(result[i][keys[2]])
-      Group3.push(result[i][keys[3]])
-      Group4.push(result[i][keys[4]])
-      Group5.push(result[i][keys[5]])
-      Group6.push(result[i][keys[6]])
-      Group7.push(result[i][keys[7]])
-      BenchMarkTimeTaken.push(result[i][keys[8]])
-
-}
-this.engagementData.push({ showInLegend: true,type: 'column',name:keys[1],data:Group1,},{showInLegend: true,type: 'column',name:keys[2],data:Group2}
-,{showInLegend: true,type: 'column',name:keys[3],data:Group3},{showInLegend: true,type: 'column',name:keys[4],data:Group4},
-{showInLegend: true,type: 'column',name:keys[4],data:Group4},{showInLegend: true,type: 'column',name:keys[5],data:Group5}
-,{showInLegend: true,type: 'column',name:keys[6],data:Group6},{showInLegend: true,type: 'column',name:keys[7],data:Group7},
-{showInLegend: true,type: 'spline',color:'blue',name:keys[8],data:BenchMarkTimeTaken})
-
+    this.data = result;
+    var keys = Object.keys(this.data[0]);
+    for (let i = 0; i < keys.length; i++) {
+      if(i==0){
+        let result = this.data.map((a) => a[keys[i]]);
+        this.GroupID= result
+      }
+      else{
+        let result = this.data.map((a) => a[keys[i]]);
+        if(i==keys.length-1){
+          let a = {showInLegend: true,type: 'spline',name:keys[i],data:result}
+          this.output1.push(a)
+        }
+        else{
+          let a = {showInLegend: true,type: 'column',name: keys[i],data: result};
+          this.output2.push(a);
+        }
+        }
+    }
+  this.engagementData = this.output2.concat(this.output1)
     this.engagementchart = new Chart({
       chart: {
         type: 'column',
@@ -76,5 +75,4 @@ this.engagementData.push({ showInLegend: true,type: 'column',name:keys[1],data:G
       },
     });
   }
-
 }

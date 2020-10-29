@@ -1,11 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './chart-modules/home/home.component';
-import { ComplianceComponent } from './chart-modules/compliance/compliance.component';
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
-import { ProgramEffectivenessComponent } from './chart-modules/program-effectiveness/program-effectiveness.component';
-import { LearningComponent } from './chart-modules/learning/learning.component';
-import { EngagementComponent } from './chart-modules/engagement/engagement.component';
 
 
 const routes: Routes = [
@@ -15,19 +10,19 @@ const routes: Routes = [
   {
     path: '', component: MainscreenComponent, children: [
       {
-        path: 'home', component: HomeComponent
+        path: 'home', loadChildren:()=>import('./chart-modules/home/home.module').then(m=>m.HomeModule)
+      },
+      { path: 'compliance', loadChildren:()=>import('./chart-modules/compliance/compliance.module').then(m=>m.ComplianceModule)  }
+      ,
+     
+      {
+        path: 'program-effectivness', loadChildren:()=>import('./chart-modules/program-effectiveness/program-effectiveness.module').then(m=>m.ProgramEffectivenessModule)
       },
       {
-        path: 'adoption', component: ComplianceComponent
+        path: 'learning', loadChildren:()=>import('./chart-modules/learning/learning.module').then(m=>m.LearningModule)
       },
       {
-        path: 'program-effectivness', component: ProgramEffectivenessComponent
-      },
-      {
-        path: 'learning', component: LearningComponent
-      },
-      {
-        path:'engagement', component:EngagementComponent
+        path:'engagement', loadChildren:()=>import('./chart-modules/engagement/engagement.module').then(m=>m.EngagementModule)
       }
     ]
   }
