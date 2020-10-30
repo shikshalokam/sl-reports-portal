@@ -17,8 +17,8 @@ export class ViewallResourceComponent implements OnInit {
   selectedItemsED: any;
   public GroupID = [];
   barchart: Chart;
-  noData:any;
-SelectionList:any
+  noData: any;
+  SelectionList: any
 
 
 
@@ -26,9 +26,9 @@ SelectionList:any
     public service: AppServiceComponent,
     public router: Router) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.service.view_resource().subscribe((res) => {
-      this.resource = res;
+      this.resource = res['data'];
       this.complianceallresource = this.resource
         .map((value) => value['content_name'])
         .filter((value, index, _arr) => _arr.indexOf(value) == index);
@@ -45,18 +45,19 @@ SelectionList:any
 
   }
   onItemSelect(item: any) {
-    this.service.resource(item).subscribe((res) => {
-      this.SelectionList=[]
+    this.service.resource(item).subscribe((response) => {
+      var res = response['data']
+      this.SelectionList = []
       this.Barchart(this.SelectionList)
-      if(res=="" || res==null){
-        this.noData="1"
-  
+      if (res == "" || res == null) {
+        this.noData = "1"
+
       }
-      else{
-        this.noData="0"
-        this.SelectionList=res
+      else {
+        this.noData = "0"
+        this.SelectionList = res
         this.Barchart(this.SelectionList);
-  
+
       }
     });
   }

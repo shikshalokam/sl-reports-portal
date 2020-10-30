@@ -44,47 +44,43 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.homedata();
-   
-    
-  }
-  
 
+
+  }
 
 
   homedata() {
-    
-   
-      this.service.app_login().subscribe((response2) => {
-        this.applogin = response2;
-        this.appcount(this.applogin);
+    this.service.app_login().subscribe((response2) => {
+      this.applogin = response2['data'];
+      this.appcount(this.applogin);
 
-        this.service.averagetimespent().subscribe((response3) => {
-          this.averagetimespent = response3;
-          this.growth_in_minutes = this.averagetimespent[0].growth_in_minutes;
-          this.minutes_time = this.averagetimespent[0].minutes_time;
-        this.service.lastupdated().subscribe((response6)=>{
-                      for(let i=0;i<response6.length;i++){
-                        this.previousDate= response6[i]["last_updated_date"]
-                      }
-          })
-          });
+      this.service.averagetimespent().subscribe((response3) => {
+        this.averagetimespent = response3['data'];
+        this.growth_in_minutes = this.averagetimespent[0].growth_in_minutes;
+        this.minutes_time = this.averagetimespent[0].minutes_time;
+        this.service.lastupdated().subscribe((response6) => {
+          for (let i = 0; i < response6.length; i++) {
+            this.previousDate = response6[i]["last_updated_date"]
+          }
+        })
+      });
 
-          });
+    });
 
   }
-  
+
   appcount(result) {
-    for(let i=0;i<result.length;i++){
-       this.bodhCount = result[i]['numUsers']
-     
+    for (let i = 0; i < result.length; i++) {
+      this.bodhCount = result[i]['numUsers']
+
     }
 
     this.unnatiCount = 0;
     this.samikshaCount = 0;
-  
-    
-  }
-  
 
-  
+
+  }
+
+
+
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Chart } from 'angular-highcharts';
-import {  Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-userrating-breakdown',
@@ -22,21 +22,21 @@ export class UserratingBreakdownComponent implements OnInit {
   chartData2 = [];
   public responseData1: any;
   public responseData2: any;
-  constructor(public http:HttpClient,private service: AppServiceComponent) {}
+  constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
   ngOnInit() {
     this.resourceSelected =
-    '3H Strategy by Professor Lorraine Graham and Lyn Alder';
-  this.serviceProgrameffectivnessSubscription = this.service
-    .programeffectivness().subscribe((res: any) => {
-      this.data = res;
-      this.data.forEach((cs) => {
-        this.data1.push(cs);
-        this.content_names.push({ name: cs.name });
+      '3H Strategy by Professor Lorraine Graham and Lyn Alder';
+    this.serviceProgrameffectivnessSubscription = this.service
+      .programeffectivness().subscribe((res: any) => {
+        this.data = res['data'];
+        this.data.forEach((cs) => {
+          this.data1.push(cs);
+          this.content_names.push({ name: cs.name });
+        });
+        this.updateValues(this.resourceSelected);
+
       });
-      this.updateValues(this.resourceSelected);
-     
-    });
 
   }
   updateValues(content_name) {
@@ -112,13 +112,13 @@ export class UserratingBreakdownComponent implements OnInit {
     });
   }
 
-  
-  
+
+
 
   ngOnDestroy(): void {
     if (this.serviceProgrameffectivnessSubscription)
       this.serviceProgrameffectivnessSubscription.unsubscribe();
-   
+
   }
 
 

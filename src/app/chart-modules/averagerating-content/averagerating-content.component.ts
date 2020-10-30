@@ -16,7 +16,7 @@ export class AverageratingContentComponent implements OnInit {
 
   ngOnInit(){
     this.service.top5basedratedcontent().subscribe((response5) => {
-      this.worddata = response5;
+      this.worddata = response5['data'];
   })
 }
 

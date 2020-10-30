@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Chart } from 'angular-highcharts';
-import {  Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-toprated-resource',
   templateUrl: './toprated-resource.component.html',
@@ -13,15 +13,15 @@ export class TopratedResourceComponent implements OnInit {
   ratedresource: any;
   barchart3: Chart;
 
-  constructor(public http:HttpClient,private service: AppServiceComponent) { }
+  constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
   ngOnInit() {
     this.serviceTop5basedratedresourceSubscription = this.service
-    .top5basedratedresource()
-    .subscribe((response: any) => {
-      this.ratedresource = response;
-      this.topratedresource(this.ratedresource);
-    });
+      .top5basedratedresource()
+      .subscribe((response: any) => {
+        this.ratedresource = response['data'];
+        this.topratedresource(this.ratedresource);
+      });
   }
   topratedresource(result) {
     var name = [];
@@ -57,7 +57,7 @@ export class TopratedResourceComponent implements OnInit {
           },
         },
       },
-      
+
       series: [
         {
           type: 'bar',
@@ -75,7 +75,7 @@ export class TopratedResourceComponent implements OnInit {
     });
   }
   ngOnDestroy(): void {
-   
+
     if (this.serviceTop5basedratedresourceSubscription)
       this.serviceTop5basedratedresourceSubscription.unsubscribe();
   }

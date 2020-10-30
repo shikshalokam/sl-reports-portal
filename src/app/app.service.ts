@@ -6,71 +6,72 @@ import { obj } from './apiurl';
   providedIn: 'root',
 })
 export class AppServiceComponent {
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   login_trend(): Observable<any> {
-    return this.http.get(obj.login_trend);
+    return this.http.post(obj.commonApi, { key: "loginTrend" });
   }
   app_login(): Observable<any> {
-    return this.http.get(obj.app_login);
+    return this.http.post(obj.commonApi, { key: "uniqueActiveUsers" });
   }
   app_percentage(): Observable<any> {
-    return this.http.get(obj.app_percentage);
+    return this.http.post(obj.commonApi, { key: "dailyAverageGrowth" });
   }
   role_count(): Observable<any> {
-    return this.http.get(obj.role_count);
+    return this.http.post(obj.commonApi, {});
   }
   map_data(): Observable<any> {
-    return this.http.get(obj.map_data);
+    return this.http.post(obj.commonApi, { key: "mapDataResources" });
   }
   map_loginpercentage(): Observable<any> {
-    return this.http.get(obj.map_loginpercentage);
-  }
-  averagetimespent(): Observable<any> {
-    return this.http.get(obj.averagetimespent);
+    return this.http.post(obj.commonApi, { key: "loginPercentage" });
   }
   app_count(): Observable<any> {
-    return this.http.get(obj.app_count);
+    return this.http.post(obj.commonApi, { key: "appCount" });
   }
   NeverLoggedIn(): Observable<any> {
-    return this.http.get(obj.userneverloggedin);
+    return this.http.post(obj.commonApi, { key: "userNeverLoggedIn" });
   }
   topscorer(): Observable<any> {
-    return this.http.get(obj.topscorer);
+    return this.http.post(obj.commonApi, { key: "topScoreQuiz" });
   }
   top5basedratedcontent(): Observable<any> {
-    return this.http.get(obj.top5basedratedcontent);
+    return this.http.post(obj.commonApi, { key: "averageRatingContent" });
   }
   programeffectivness(): Observable<any> {
-    return this.http.get<any>(obj['program-effectivness']);
+    return this.http.post<any>(obj['program-effectivness'], { key: "countContentRating" });
   }
   lastupdated(): Observable<any> {
-    return this.http.get<any>(obj.lastupdated)
+    return this.http.post<any>(obj.commonApi, { key: "lastUpdatedDate" })
   }
   top5basedratedresource(): Observable<any> {
-    return this.http.get<any>(obj.top5basedratedresource);
+    return this.http.post<any>(obj.commonApi, { key: "topFiveContentRatings" });
   }
   topscoreinquiz(): Observable<any> {
-    return this.http.get(obj.topscoreinquiz);
+    return this.http.post(obj.commonApi, { key: "learningTopscoreQuiz" });
   }
   learningquiz(): Observable<any> {
-    return this.http.get(obj.learningquiz);
+    return this.http.post(obj.commonApi, { key: "participationPercentage" });
+  }
+
+  averagetimespent() {
+    return this.http.post(obj.commonApi, { key: "averageTimeSpent" });
   }
 
   diff(data): Observable<any> {
     return this.http.post(obj.diff, { data });
   }
   view_resource(): Observable<any> {
-    return this.http.get(obj.view_resource);
+    return this.http.post(obj.commonApi, { key: "adoptionContent" });
   }
   resource(data): Observable<any> {
-    return this.http.post(obj.resource, data);
+    return this.http.post(obj.resource, { data, key: "multiResource" });
   }
 
   engagement(): Observable<any> {
     return this.http.get('../../assets/engagement.json');
   }
   adoption(data): Observable<any> {
-    return this.http.post(obj.adoption, data);
+    return this.http.post(obj.adoption, { data, key: "multiSelection" });
   }
 }

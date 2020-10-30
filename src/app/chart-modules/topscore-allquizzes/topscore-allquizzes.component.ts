@@ -19,7 +19,7 @@ export class TopscoreAllquizzesComponent implements OnInit {
 
   ngOnInit(){
     this.service.topscorer().subscribe((response4) => {
-      this.topscorer = response4;
+      this.topscorer = response4['data'];
       
       this.topscorer.sort((a, b) =>
         Number(a.topscore) < Number(b.topscore)

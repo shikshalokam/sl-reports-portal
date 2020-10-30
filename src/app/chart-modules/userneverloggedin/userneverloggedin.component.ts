@@ -20,7 +20,7 @@ export class UserneverloggedinComponent implements OnInit {
 
   ngOnInit(){
     this.service.NeverLoggedIn().subscribe((res) => {
-      this.userneverloggedin = res;
+      this.userneverloggedin = res['data'];
       this.userneverloggedin.sort((a, b) =>
         Number(a.users_never_logged_in) < Number(b.users_never_logged_in)
           ? 1

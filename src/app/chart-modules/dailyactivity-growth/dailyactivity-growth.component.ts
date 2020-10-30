@@ -14,54 +14,56 @@ export class DailyactivityGrowthComponent implements OnInit {
 
 
 
-  constructor( public http: HttpClient,
+  constructor(public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.service.app_percentage().subscribe((response1) => {
-      this.apppercentage = response1;
+      this.apppercentage = response1['data'];
       this.lineChart(this.apppercentage);
-      })
+    })
+  }
+  lineChart(result) {
+    var date = [];
+    var linechartData = [];
+
+    var keys = Object.keys(result[0])
+    for (let i = 0; i < keys.length; i++) {
+      if (i == 0) {
+        let result1 = result.map((a) => a[keys[i]]);
+        date = result1
+      }
+      else {
+        let result1 = result.map(a => parseInt(a[keys[i]]));
+        let a = {
+          showInLegend: true, type: 'spline',
+          name: `<span style="font-size:16px;font-family:Segoe UI ;">${keys[i]} </span>`,
+          data: (result1)
+        }
+        linechartData.push(a)
+      }
+
     }
-    lineChart(result) {
-      var date = [];
-      var linechartData = [];
-      
-      var keys = Object.keys(result[0])
-      for(let i=0;i<keys.length;i++){
-        if(i==0){
-          let result1 = result.map((a) => a[keys[i]]);
-          date= result1
-        }
-        else{
-          let result1 = result.map(a => parseInt(a[keys[i]]));
-          let a = {showInLegend: true,type: 'spline',
-          name:`<span style="font-size:16px;font-family:Segoe UI ;">${keys[i]} </span>`,
-          data:(result1)}
-          linechartData.push(a)
-        }
-       
-        }
-  
-      this.linechart = new Chart({
-        chart: {
-          type: 'spline',
-        },
-        title: {
-          text: '<span style="font-size: 16px ;font-family: Segoe UI ; color:black">Daily Activity Growth By App</span>',
-  
-        },
-        xAxis: {
-          categories: date,
-        },
-        yAxis: {
-  
-        },
-        series: linechartData,
-        exporting: {
-          enabled: true,
-        },
-      });
-    }
+
+    this.linechart = new Chart({
+      chart: {
+        type: 'spline',
+      },
+      title: {
+        text: '<span style="font-size: 16px ;font-family: Segoe UI ; color:black">Daily Activity Growth By App</span>',
+
+      },
+      xAxis: {
+        categories: date,
+      },
+      yAxis: {
+
+      },
+      series: linechartData,
+      exporting: {
+        enabled: true,
+      },
+    });
+  }
 }

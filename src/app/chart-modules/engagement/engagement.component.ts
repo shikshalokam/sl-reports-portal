@@ -20,7 +20,7 @@ export class EngagementComponent implements OnInit {
 
   ngOnInit() {
     this.service.engagement().subscribe((res) => {
-      this.EngagementBarchart(res);
+      this.EngagementBarchart(res['data']);
     });
   }
 
