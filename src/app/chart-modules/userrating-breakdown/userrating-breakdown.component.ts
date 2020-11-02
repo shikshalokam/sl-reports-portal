@@ -13,19 +13,18 @@ export class UserratingBreakdownComponent implements OnInit {
   public data;
   data1 = [];
   content_names: any = [];
-  public resourceSelected: String;
+  public resourceselected: String;
   barchart: Chart;
   barchart1: Chart;
   serviceProgrameffectivnessSubscription: Subscription;
   ratedresource: any;
-  chartData1 = [];
-  chartData2 = [];
-  public responseData1: any;
-  public responseData2: any;
+  chartdata1 = [];
+  chartdata2 = [];
+  
   constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
   ngOnInit() {
-    this.resourceSelected =
+    this.resourceselected =
       '3H Strategy by Professor Lorraine Graham and Lyn Alder';
     this.serviceProgrameffectivnessSubscription = this.service
       .programeffectivness().subscribe((res: any) => {
@@ -34,36 +33,36 @@ export class UserratingBreakdownComponent implements OnInit {
           this.data1.push(cs);
           this.content_names.push({ name: cs.name });
         });
-        this.updateValues(this.resourceSelected);
+        this.updateValues(this.resourceselected);
 
       });
 
   }
   updateValues(content_name) {
-    this.chartData1 = [];
-    this.chartData2 = [];
+    this.chartdata1 = [];
+    this.chartdata2 = [];
 
     this.data1.forEach((cs) => {
       if (cs.name == content_name) {
         for (let i = 0; i < Object.keys(cs).length - 2; i++) {
           let p = Object.keys(cs);
-          this.chartData1.push({
+          this.chartdata1.push({
             key: `Rating ${p[i]}`,
             value: Number(Object.values(cs)[i]),
           });
         }
         for (let i = 6; i < Object.keys(cs).length; i++) {
-          this.chartData2.push({
+          this.chartdata2.push({
             key: `OverAll Rating`,
             value: Number(Object.values(cs)[i]),
           });
         }
-        this.barChart(this.chartData1);
+        this.userRatingBreakdown(this.chartdata1);
       }
     });
   }
 
-  barChart(result) {
+  userRatingBreakdown(result) {
 
     var username = [];
     var topscore = [];

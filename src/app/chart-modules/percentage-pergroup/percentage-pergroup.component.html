@@ -1,7 +1,7 @@
-<ng-select class="custom" placeholder="select please ..." [(ngModel)]="selectedItemsED1"
-(change)="onItemSelect1($event)" [multiple]="true">
-<ng-option *ngFor="let car of logintrendData" [value]="car.item_text" style=" font-size: 11px;">
+<ng-select class="custom" placeholder="select please ..." [(ngModel)]="selecteditems"
+(change)="onItemSelect($event)" [multiple]="true">
+<ng-option *ngFor="let car of logintrend_data" [value]="car.item_text" style=" font-size: 11px;">
   {{car.item_text}}</ng-option>
 </ng-select>
-<p class="c-center" *ngIf="noData == 1" style="color:red"> <strong>No data found</strong> </p>
-<div *ngIf="noData == 0" [chart]="adoptionchart"></div>
+<p class="c-center" *ngIf="nodata == 1" style="color:red"> <strong>No data found</strong> </p>
+<div *ngIf="nodata == 0" [chart]="adoptionchart"></div>

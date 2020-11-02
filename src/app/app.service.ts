@@ -39,7 +39,7 @@ export class AppServiceComponent {
     return this.http.post(obj.commonApi, { key: "averageRatingContent" });
   }
   programeffectivness(): Observable<any> {
-    return this.http.post<any>(obj['program-effectivness'], { key: "countContentRating" });
+    return this.http.post<any>(obj.commonApi, { key: "countContentRating" });
   }
   lastupdated(): Observable<any> {
     return this.http.post<any>(obj.commonApi, { key: "lastUpdatedDate" })

@@ -12,13 +12,13 @@ import { Chart } from 'angular-highcharts';
 export class ViewallResourceComponent implements OnInit {
   complianceallresource: any = [];
   public resource: any;
-  public dropdownList1 = [];
-  dropdownList = [];
-  selectedItemsED: any;
-  public GroupID = [];
+  public dropdownlist1 = [];
+  dropdownlist = [];
+  selecteditems: any;
+  public group_id = [];
   barchart: Chart;
-  noData: any;
-  SelectionList: any
+  nodata: any;
+  selectionlist: any
 
 
 
@@ -33,40 +33,40 @@ export class ViewallResourceComponent implements OnInit {
         .map((value) => value['content_name'])
         .filter((value, index, _arr) => _arr.indexOf(value) == index);
       for (var i = 0; i < this.complianceallresource.length; i++) {
-        this.dropdownList1.push({
+        this.dropdownlist1.push({
           item_id: i + 1,
           item_text: this.complianceallresource[i],
         });
-        this.dropdownList = this.dropdownList1;
-        this.selectedItemsED = ['<NULL>'];
+        this.dropdownlist = this.dropdownlist1;
+        this.selecteditems = ['<NULL>'];
       }
-      this.onItemSelect(this.selectedItemsED);
+      this.onItemSelect(this.selecteditems);
     });
 
   }
   onItemSelect(item: any) {
     this.service.resource(item).subscribe((response) => {
       var res = response['data']
-      this.SelectionList = []
-      this.Barchart(this.SelectionList)
+      this.selectionlist = []
+      this.viewAllResource(this.selectionlist)
       if (res == "" || res == null) {
-        this.noData = "1"
+        this.nodata = "1"
 
       }
       else {
-        this.noData = "0"
-        this.SelectionList = res
-        this.Barchart(this.SelectionList);
+        this.nodata = "0"
+        this.selectionlist = res
+        this.viewAllResource(this.selectionlist);
 
       }
     });
   }
-  Barchart(result) {
+  viewAllResource(result) {
     var viewallresource = [];
 
     for (let i = 0; i < result.length; i++) {
-      viewallresource.push(result[i]['data']);
-      this.GroupID.push(result[i]['name']);
+      viewallresource.push(result[i]['count']);
+      this.group_id.push(result[i]['group']);
     }
 
     this.barchart = new Chart({
@@ -79,7 +79,7 @@ export class ViewallResourceComponent implements OnInit {
           '<span style="font-size: 16px ;font-family: Segoe UI">User viewed all resources</span>',
       },
       xAxis: {
-        categories: this.GroupID,
+        categories: this.group_id,
       },
       yAxis: {
         title: {

@@ -15,7 +15,7 @@ var globalMap;
   styleUrls: ['./activitypercentage-perdistrict.component.scss']
 })
 export class ActivitypercentagePerdistrictComponent implements OnInit {
-  markerData: any;
+  markerdata: any;
 
   constructor(public http: HttpClient,
     public service: AppServiceComponent,
@@ -23,9 +23,9 @@ export class ActivitypercentagePerdistrictComponent implements OnInit {
 
   ngOnInit() {
     this.service.map_loginpercentage().subscribe((res) => {
-      this.markerData = res['data'];
+      this.markerdata = res['data'];
       data.default['features'].forEach((element) => {
-        this.markerData.forEach((prop) => {
+        this.markerdata.forEach((prop) => {
           if (
             element.properties['District Name'] ==
             prop['District Name']

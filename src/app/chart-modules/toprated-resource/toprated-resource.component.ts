@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class TopratedResourceComponent implements OnInit {
   serviceTop5basedratedresourceSubscription: Subscription;
   ratedresource: any;
-  barchart3: Chart;
+  barchart: Chart;
 
   constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
@@ -20,10 +20,10 @@ export class TopratedResourceComponent implements OnInit {
       .top5basedratedresource()
       .subscribe((response: any) => {
         this.ratedresource = response['data'];
-        this.topratedresource(this.ratedresource);
+        this.topratedResource(this.ratedresource);
       });
   }
-  topratedresource(result) {
+  topratedResource(result) {
     var name = [];
     var average_rating = [];
     var numofusers = [];
@@ -34,7 +34,7 @@ export class TopratedResourceComponent implements OnInit {
       numofusers.push(Number(result[i]['numofusers']));
     }
 
-    this.barchart3 = new Chart({
+    this.barchart = new Chart({
       chart: {
         type: 'bar',
       },

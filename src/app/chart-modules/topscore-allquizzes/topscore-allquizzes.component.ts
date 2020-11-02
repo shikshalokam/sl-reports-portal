@@ -10,7 +10,7 @@ import { Chart } from 'angular-highcharts';
   styleUrls: ['./topscore-allquizzes.component.scss']
 })
 export class TopscoreAllquizzesComponent implements OnInit {
-  topscorer: any;
+  topscore: any;
   barchart:Chart
 
   constructor( public http: HttpClient,
@@ -19,9 +19,9 @@ export class TopscoreAllquizzesComponent implements OnInit {
 
   ngOnInit(){
     this.service.topscorer().subscribe((response4) => {
-      this.topscorer = response4['data'];
+      this.topscore = response4['data'];
       
-      this.topscorer.sort((a, b) =>
+      this.topscore.sort((a, b) =>
         Number(a.topscore) < Number(b.topscore)
           ? 1
           : Number(b.topscore) < Number(a.topscore)
@@ -29,11 +29,11 @@ export class TopscoreAllquizzesComponent implements OnInit {
             : 0
       );
 
-      this.barChart(this.topscorer);
+      this.topscoreQuizzes(this.topscore);
   })
 
   }
-  barChart(result) {
+  topscoreQuizzes(result) {
     var User_FirstName ;
     var TotalScore = [];
     var keys= Object.keys(result[0])

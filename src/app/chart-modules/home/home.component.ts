@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
   previousDate: any
-
+  public date:any
 
   mouseenter() {
     if (!this.isExpanded) {
@@ -59,9 +59,10 @@ export class HomeComponent implements OnInit {
         this.growth_in_minutes = this.averagetimespent[0].growth_in_minutes;
         this.minutes_time = this.averagetimespent[0].minutes_time;
         this.service.lastupdated().subscribe((response6) => {
-          for (let i = 0; i < response6.length; i++) {
-            this.previousDate = response6[i]["last_updated_date"]
-          }
+          this.date= response6['data']
+          this.previousDate = this.date[0]['last_updated_date']
+          
+          
         })
       });
 

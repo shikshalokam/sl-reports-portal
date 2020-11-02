@@ -15,7 +15,7 @@ var globalMap;
   styleUrls: ['./resources-perdistrict.component.scss']
 })
 export class ResourcesPerdistrictComponent implements OnInit {
-  markerData: any;
+  markerdata: any;
 
 
   constructor(public http: HttpClient,
@@ -24,9 +24,9 @@ export class ResourcesPerdistrictComponent implements OnInit {
 
   ngOnInit() {
     this.service.map_data().subscribe((res) => {
-      this.markerData = res['data'];
+      this.markerdata = res['data'];
       data.default['features'].forEach((element) => {
-        this.markerData.forEach((prop) => {
+        this.markerdata.forEach((prop) => {
           if (
             element.properties['District Name'] ==
             prop['District Name']

@@ -9,7 +9,7 @@ import { Chart } from 'angular-highcharts';
   styleUrls: ['./dailyactivity-growth.component.scss']
 })
 export class DailyactivityGrowthComponent implements OnInit {
-  public apppercentage;
+  public app_percentage;
   linechart: Chart;
 
 
@@ -20,13 +20,13 @@ export class DailyactivityGrowthComponent implements OnInit {
 
   ngOnInit() {
     this.service.app_percentage().subscribe((response1) => {
-      this.apppercentage = response1['data'];
-      this.lineChart(this.apppercentage);
+      this.app_percentage = response1['data'];
+      this.dailyActivityGrowth(this.app_percentage);
     })
   }
-  lineChart(result) {
+  dailyActivityGrowth(result) {
     var date = [];
-    var linechartData = [];
+    var linechartdata = [];
 
     var keys = Object.keys(result[0])
     for (let i = 0; i < keys.length; i++) {
@@ -41,7 +41,7 @@ export class DailyactivityGrowthComponent implements OnInit {
           name: `<span style="font-size:16px;font-family:Segoe UI ;">${keys[i]} </span>`,
           data: (result1)
         }
-        linechartData.push(a)
+        linechartdata.push(a)
       }
 
     }
@@ -60,7 +60,7 @@ export class DailyactivityGrowthComponent implements OnInit {
       yAxis: {
 
       },
-      series: linechartData,
+      series: linechartdata,
       exporting: {
         enabled: true,
       },

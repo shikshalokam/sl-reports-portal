@@ -11,11 +11,11 @@ import { Chart } from 'angular-highcharts';
 export class PercentagePergroupComponent implements OnInit {
   public logintrend: any = [];
   public keys;
-  public logintrendData = [];
-  selectedItemsED1: any;
+  public logintrend_data = [];
+  selecteditems: any;
   adoptionchart: Chart
-  noData: any;
-  SelectionList: any
+  nodata: any;
+  selection_list: any
 
   constructor(public http: HttpClient,
     public service: AppServiceComponent,
@@ -26,26 +26,26 @@ export class PercentagePergroupComponent implements OnInit {
       this.logintrend = res['data'];
       this.keys = Object.keys(this.logintrend[0])
       for (let i = 2; i < this.keys.length; i++) {
-        this.logintrendData.push({ item_id: i + 1, item_text: this.keys[i] })
-        this.selectedItemsED1 = ["APSWREIS-TGT 1", "SGT"];
+        this.logintrend_data.push({ item_id: i + 1, item_text: this.keys[i] })
+        this.selecteditems = ["APSWREIS-TGT 1", "SGT"];
       }
-      this.onItemSelect1(this.selectedItemsED1)
+      this.onItemSelect(this.selecteditems)
     })
   }
 
-  onItemSelect1(items) {
+  onItemSelect(items) {
     this.service.adoption(items).subscribe((res) => {
       var data = res['data'];
-      this.SelectionList = []
-      this.Linechart(this.SelectionList)
+      this.selection_list = []
+      this.percentagePerGroup(this.selection_list)
       if (data == "" || data == null) {
-        this.noData = "1"
+        this.nodata = "1"
 
       }
       else {
-        this.noData = "0"
-        this.SelectionList = data
-        this.Linechart(this.SelectionList);
+        this.nodata = "0"
+        this.selection_list = data
+        this.percentagePerGroup(this.selection_list);
 
       }
 
@@ -54,7 +54,7 @@ export class PercentagePergroupComponent implements OnInit {
 
 
   }
-  Linechart(result) {
+  percentagePerGroup(result) {
     var date = []
     this.logintrend.forEach((cs) => {
       date.push(cs[this.keys[0]])

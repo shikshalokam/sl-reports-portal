@@ -10,7 +10,7 @@ import { Chart } from 'angular-highcharts';
 })
 export class DailyactivePerappComponent implements OnInit {
   public appcount: any;
-  linechart2: Chart;
+  linechart: Chart;
 
 
   constructor(public http: HttpClient,
@@ -20,10 +20,10 @@ export class DailyactivePerappComponent implements OnInit {
   ngOnInit() {
     this.service.app_count().subscribe((res) => {
       this.appcount = res['data'];
-      this.lineChart2(this.appcount);
+      this.dailyActivityPerApp(this.appcount);
     })
   }
-  lineChart2(result) {
+  dailyActivityPerApp(result) {
     var date;
     var linechartData = [];
 
@@ -40,7 +40,7 @@ export class DailyactivePerappComponent implements OnInit {
       }
 
     }
-    this.linechart2 = new Chart({
+    this.linechart = new Chart({
       chart: {
         type: 'spline',
       },

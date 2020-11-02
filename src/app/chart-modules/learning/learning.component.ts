@@ -9,15 +9,15 @@ import { Chart } from 'angular-highcharts';
 })
 export class LearningComponent implements OnInit {
   public data;
-  public learningQuiz;
-  QuizName: any = [];
-  learningQuizName: any = [];
-  public QuizNameSelected: String;
+  public learningquiz;
+  quizname: any = [];
+  learningquizname: any = [];
+  public quiznameselected: String;
   quiz_names: any = [];
   learning_quiz_names: any = [];
-  public tableData = [];
-  public learningNameSelected1: String;
-  public learningNameSelected2: String;
+  public tabledata = [];
+  public learningnameselected1: String;
+  public learningnameselected2: String;
   public participation: Chart
   public score: Chart
   public data1 = [];
@@ -27,46 +27,46 @@ export class LearningComponent implements OnInit {
   public selected1;
   public selected2;
   public categories = []
-  public ParticipationPercentage;
-  public ScorePercentage;
+  public ppercentagedata;
+  public spercentagedata;
   public diff1;
   public diff2;
 
   constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
   ngOnInit() {
-    this.QuizNameSelected = "Endline quiz (3H strategy)";
-    this.learningNameSelected1 = 'Baseline Quiz';
-    this.learningNameSelected2 = 'Baseline quiz (3H strategy)';
+    this.quiznameselected = "Endline quiz (3H strategy)";
+    this.learningnameselected1 = 'Baseline Quiz';
+    this.learningnameselected2 = 'Baseline quiz (3H strategy)';
 
     this.service.topscoreinquiz().subscribe((response1) => {
       this.data = response1['data'];
-      this.QuizName = this.data.map((value) => value['section_name']).filter((value, index, _arr) => _arr.indexOf(value) == index);
-      for (var i = 0; i < this.QuizName.length; i++) {
-        this.quiz_names.push({ name: this.QuizName[i] });
+      this.quizname = this.data.map((value) => value['section_name']).filter((value, index, _arr) => _arr.indexOf(value) == index);
+      for (var i = 0; i < this.quizname.length; i++) {
+        this.quiz_names.push({ name: this.quizname[i] });
       }
-      this.updateValues(this.QuizNameSelected);
+      this.updateValues(this.quiznameselected);
       this.service.learningquiz().subscribe((response2) => {
-        this.learningQuiz = response2['data'];
-        this.learningQuizName = this.learningQuiz
+        this.learningquiz = response2['data'];
+        this.learningquizname = this.learningquiz
           .map((value) => value['section_name'])
           .filter((value, index, _arr) => _arr.indexOf(value) == index);
-        for (var i = 0; i < this.learningQuizName.length; i++) {
-          this.learning_quiz_names.push({ name: this.learningQuizName[i] });
+        for (var i = 0; i < this.learningquizname.length; i++) {
+          this.learning_quiz_names.push({ name: this.learningquizname[i] });
         }
-        this.learningupdateValues1(this.learningNameSelected1);
-        this.learningupdateValues2(this.learningNameSelected2);
+        this.learningupdateValues1(this.learningnameselected1);
+        this.learningupdateValues2(this.learningnameselected2);
       });
 
     });
 
     // this.service.learningquiz().subscribe((response2) => {
     //   this.learningQuiz = response2;
-    //   this.learningQuizName = this.learningQuiz
+    //   this.learningquizname = this.learningQuiz
     //     .map((value) => value['section_name'])
     //     .filter((value, index, _arr) => _arr.indexOf(value) == index);
-    //   for (var i = 0; i < this.learningQuizName.length; i++) {
-    //     this.learning_quiz_names.push({ name: this.learningQuizName[i] });
+    //   for (var i = 0; i < this.learningquizname.length; i++) {
+    //     this.learning_quiz_names.push({ name: this.learningquizname[i] });
     //   }
     //   this.learningupdateValues1(this.learningNameSelected1);
     //   this.learningupdateValues2(this.learningNameSelected2);
@@ -74,10 +74,10 @@ export class LearningComponent implements OnInit {
   }
 
   updateValues(quiz_name) {
-    this.tableData = [];
+    this.tabledata = [];
     this.data.forEach((cs) => {
       if (cs['section_name'] == quiz_name) {
-        this.tableData.push(cs);
+        this.tabledata.push(cs);
       }
     });
   }
@@ -88,20 +88,19 @@ export class LearningComponent implements OnInit {
     this.selected1 = learningQuiz
     this.data1 = [];
     this.data3 = [];
-    this.data2 = [0];
-    this.data4 = [0];
-    this.learningQuiz.forEach((cs) => {
+   
+    this.learningquiz.forEach((cs) => {
       if (cs['section_name'] == learningQuiz) {
         this.data1.push(Number(cs['participation_percentage']));
         this.data3.push(Number(cs['score_percentage']));
 
       }
     });
-    this.ParticipationPercentage = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
-    this.ScorePercentage = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
+    this.ppercentagedata = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
+    this.spercentagedata = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
 
-    this.ParticipationPer(this.ParticipationPercentage)
-    this.ScorePer(this.ScorePercentage)
+    this.participationPercentage(this.ppercentagedata)
+    this.scorePercentage(this.spercentagedata)
 
     this.service.diff({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
       this.difference1([{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]);
@@ -115,7 +114,7 @@ export class LearningComponent implements OnInit {
     this.selected2 = learningQuiz
     this.data2 = [];
     this.data4 = [];
-    this.learningQuiz.forEach((cs) => {
+    this.learningquiz.forEach((cs) => {
       if (cs['section_name'] == learningQuiz) {
         this.data2.push(Number(cs['participation_percentage']));
         this.data4.push(Number(cs['score_percentage']));
@@ -124,21 +123,21 @@ export class LearningComponent implements OnInit {
       }
     });
 
-    this.ParticipationPercentage = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
-    this.ScorePercentage = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
-    this.ParticipationPer(this.ParticipationPercentage)
-    this.ScorePer(this.ScorePercentage)
+    this.ppercentagedata = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
+    this.spercentagedata = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
+    this.participationPercentage(this.ppercentagedata)
+    this.scorePercentage(this.spercentagedata)
 
     this.service.diff({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
-      this.difference1([{ name: "Variance", data: res, showInLegend: false, pointWidth: 50 }]);
+      this.difference1([{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]);
     })
 
     this.service.diff({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
-      this.difference2([{ name: "Variance", data: res, showInLegend: false, pointWidth: 50 }]);
+      this.difference2([{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]);
     })
   }
   ///////////////////////////////
-  ParticipationPer(result) {
+  participationPercentage(result) {
     this.participation = new Chart({
       chart: {
         type: 'column',
@@ -193,7 +192,7 @@ export class LearningComponent implements OnInit {
   }
 
   ////////////////////////////
-  ScorePer(result) {
+  scorePercentage(result) {
     this.score = new Chart({
       chart: {
         type: 'column',

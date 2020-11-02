@@ -11,26 +11,26 @@ import * as Highcharts from 'highcharts';
 })
 export class EngagementComponent implements OnInit {
   public data: any;
-  public GroupID = [];
+  public group_id = [];
   engagementchart: Chart;
- public output1 = []
- public output2=[]
-  public engagementData ;
+  public output1 = []
+  public output2=[]
+  public engagementdata ;
   constructor(public http: HttpClient, public service: AppServiceComponent) {}
 
   ngOnInit() {
     this.service.engagement().subscribe((res) => {
-      this.EngagementBarchart(res['data']);
+      this.engagementBarChart(res);
     });
   }
 
-  EngagementBarchart(result) {
+  engagementBarChart(result) {
     this.data = result;
     var keys = Object.keys(this.data[0]);
     for (let i = 0; i < keys.length; i++) {
       if(i==0){
         let result = this.data.map((a) => a[keys[i]]);
-        this.GroupID= result
+        this.group_id= result
       }
       else{
         let result = this.data.map((a) => a[keys[i]]);
@@ -44,7 +44,7 @@ export class EngagementComponent implements OnInit {
         }
         }
     }
-  this.engagementData = this.output2.concat(this.output1)
+  this.engagementdata = this.output2.concat(this.output1)
     this.engagementchart = new Chart({
       chart: {
         type: 'column',
@@ -54,7 +54,7 @@ export class EngagementComponent implements OnInit {
           '<span style="font-size: 16px ;font-family: Segoe UI">Median Time Taken</span>',
       },
       xAxis: {
-        categories: this.GroupID,
+        categories: this.group_id,
       },
       yAxis: {
         title: {
@@ -68,7 +68,7 @@ export class EngagementComponent implements OnInit {
           },
         },
       },
-      series: this.engagementData,
+      series: this.engagementdata,
 
       exporting: {
         enabled: false,

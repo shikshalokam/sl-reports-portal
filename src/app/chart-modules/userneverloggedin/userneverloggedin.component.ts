@@ -10,7 +10,7 @@ import { Chart } from 'angular-highcharts';
 })
 export class UserneverloggedinComponent implements OnInit {
   userneverloggedin: any;
-  barChart1: Chart;
+  barchart: Chart;
   public role_externalId:any
 
 
@@ -28,11 +28,11 @@ export class UserneverloggedinComponent implements OnInit {
           ? -1
           : 0
       );
-      this.barChart(this.userneverloggedin);
+      this.userNotActive(this.userneverloggedin);
   })
 
 }
-barChart(result) {
+userNotActive(result) {
 
   var users_never_logged_in = []
   var keys = Object.keys(result[0]);
@@ -48,7 +48,7 @@ barChart(result) {
     }
    
     }
-this.barChart1 = new Chart({
+this.barchart = new Chart({
     chart: {
       type: 'column',
     },
