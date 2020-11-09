@@ -1,1 +1,2 @@
-<div [chart]="linechart" style="height: 66vh;"></div>
+<div *ngIf="parentData"><app-spline-chart [splineChartData]="parentData"></app-spline-chart></div>
+

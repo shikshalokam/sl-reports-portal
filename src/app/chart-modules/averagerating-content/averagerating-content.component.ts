@@ -8,15 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./averagerating-content.component.scss']
 })
 export class AverageratingContentComponent implements OnInit {
-  worddata: any;
+  contentData: any;
 
   constructor( public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router) { }
 
   ngOnInit(){
-    this.service.top5basedratedcontent().subscribe((response5) => {
-      this.worddata = response5['data'];
+    this.service.topFiveBasedRatedContent().subscribe((response5) => {
+      this.contentData = response5['data'];
   })
 }
 

@@ -4,10 +4,10 @@
       <div class="col-md-12" style="border:2px solid #d3d3d3">
         <p style="text-align: center; font: size 16px;">Best Performers in Yesterday's Quiz</p>
 
-        <select id="resource" [(ngModel)]="quiznameselected" name="quiznameselected"
-          (change)="updateValues(quiznameselected)">
-          <option [value]="quiznameselected" disabled selected="selected">Choose a QuizName</option>
-          <option *ngFor="let name of quiz_names" [(ngValue)]="name.name" style="font-size: 11px">{{ name.name }}
+        <select id="resource" [(ngModel)]="quizNameSelected" name="quizNameSelected"
+          (change)="updateValues(quizNameSelected)">
+          <option [value]="quizNameSelected" disabled selected="selected">Choose a QuizName</option>
+          <option *ngFor="let name of quizNames" [(ngValue)]="name.name" style="font-size: 11px">{{ name.name }}
           </option>
         </select>
         <div class="row">
@@ -24,7 +24,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let cs of tabledata; index as i" [ngClass]="{'color': (cs['Score Percentage']> 95 && cs['Score Percentage'] <= 100) , 'color1':
+                <tr *ngFor="let cs of bestPerformerData; index as i" [ngClass]="{'color': (cs['Score Percentage']> 95 && cs['Score Percentage'] <= 100) , 'color1':
                     (cs['Score Percentage']  > 80 && cs['Score Percentage'] <95) }">
                   <td>{{ cs['section_name'] }}</td>
                   <td>{{ cs['district'] }}</td>
@@ -45,37 +45,49 @@
       <div class="col-md-12" style="border:2px solid #d3d3d3">
         <div class="row">
           <div class="col-sm-3">
-            <select id="resource" style="width: 90%;" [(ngModel)]="learningnameselected1" name="learningnameselected1"
-              (change)="learningupdateValues1(learningnameselected1)">
-              <option [value]="learningnameselected1" disabled selected="selected">Choose a QuizName</option>
-              <option *ngFor="let name of learning_quiz_names" [(ngValue)]="name.name" style="font-size: 11px">
+            <select id="resource" style="width: 90%;" [(ngModel)]="learningNameSelected1" name="learningNameSelected1"
+              (change)="learningupdateValues1(learningNameSelected1)">
+              <option [value]="learningNameSelected1" disabled selected="selected">Choose a QuizName</option>
+              <option *ngFor="let name of learningQuizNames" [(ngValue)]="name.name" style="font-size: 11px">
                 {{ name.name }}</option>
             </select>
           </div>
           <!-- <div class="col-sm-2"></div> -->
           <div class="col-sm-3">
-            <select id="resource" style=" width: 90%;" [(ngModel)]="learningnameselected2" name="learningnameselected2"
-              (change)="learningupdateValues2(learningnameselected2)">
-              <option [value]="learningnameselected2" disabled selected="selected">Choose a QuizName</option>
-              <option *ngFor="let name of learning_quiz_names" [(ngValue)]="name.name" style="font-size: 11px">
+            <select id="resource" style=" width: 90%;" [(ngModel)]="learningNameSelected2" name="learningNameSelected2"
+              (change)="learningupdateValues2(learningNameSelected2)">
+              <option [value]="learningNameSelected2" disabled selected="selected">Choose a QuizName</option>
+              <option *ngFor="let name of learningQuizNames" [(ngValue)]="name.name" style="font-size: 11px">
                 {{ name.name }}</option>
             </select>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-7">
-            <div [chart]="participation"></div>
+
+            <div *ngIf="participationPercentage">
+              <app-column-chart [columnChartData]="participationPercentage"></app-column-chart>
+            </div>
           </div>
           <div class="col-sm-5">
-            <div [chart]="diff1"></div>
+            <div *ngIf="participationVariance">
+              <app-percentage-variance [percentageVariance]="participationVariance"></app-percentage-variance>
+            </div>
+
           </div>
         </div><br>
         <div class="row">
           <div class="col-sm-7">
-            <div [chart]="score"></div>
+            <div *ngIf="scorePercentage">
+              <app-column-chart [columnChartData]="scorePercentage"></app-column-chart>
+            </div>
+
           </div>
           <div class="col-sm-5">
-            <div [chart]="diff2"></div>
+            <div *ngIf="scoreVariance">
+              <app-percentage-variance [percentageVariance]="scoreVariance"></app-percentage-variance>
+            </div>
+
           </div>
         </div>
       </div>

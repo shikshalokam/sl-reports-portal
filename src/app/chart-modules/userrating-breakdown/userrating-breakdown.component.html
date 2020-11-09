@@ -1,17 +1,17 @@
 <div class="row">
     <div class="col-sm-6">
-        <select id="resource" style="width: 80%;" [(ngModel)]="resourceselected" name="resourceselected"
-            (change)="updateValues(resourceselected)">
-            <option [value]="resourceselected" disabled selected="selected">Choose a Resource
+        <select id="resource" style="width: 80%;" [(ngModel)]="resourceSelected" name="resourceSelected"
+            (change)="updateValues(resourceSelected)">
+            <option [value]="resourceSelected" disabled selected="selected">Choose a Resource
             </option>
-            <option *ngFor="let name of content_names" [(ngValue)]="name.name"
+            <option *ngFor="let name of contentNames" [(ngValue)]="name.name"
                 style=" font-size: 11px;">
                 {{name.name}}
             </option>
         </select>
     </div>
     <div class="col-sm-6">
-        <div *ngFor="let item of chartdata2"
+        <div *ngFor="let item of chartData2"
             style="font-family: 'Segoe UI';font-size:16px; text-align:center">
             <b> {{item.key}}:{{item.value}}</b>
         </div>
@@ -20,7 +20,9 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12">
-        <div [chart]="barchart" style="height: 66vh;"></div>
+    <div class="col-sm-12" >
+        <div *ngIf="parentData"><app-bar-chart [barChartData]="parentData"></app-bar-chart></div>
+
+        
     </div>
 </div>

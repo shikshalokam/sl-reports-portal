@@ -8,60 +8,59 @@ import { obj } from './apiurl';
 export class AppServiceComponent {
   constructor(public http: HttpClient) { }
 
-  login_trend(): Observable<any> {
+  loginTrend(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "loginTrend" });
   }
-  app_login(): Observable<any> {
+  appLogin(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "uniqueActiveUsers" });
   }
-  app_percentage(): Observable<any> {
+  appPercentage(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "dailyAverageGrowth" });
   }
-  role_count(): Observable<any> {
-    return this.http.post(obj.commonApi, {});
-  }
-  map_data(): Observable<any> {
+  
+  mapData(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "mapDataResources" });
   }
-  map_loginpercentage(): Observable<any> {
+  mapLoginPercentage(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "loginPercentage" });
   }
-  app_count(): Observable<any> {
+  
+  appCount(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "appCount" });
   }
-  NeverLoggedIn(): Observable<any> {
+  neverLoggedIn(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "userNeverLoggedIn" });
   }
-  topscorer(): Observable<any> {
+  topScore(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "topScoreQuiz" });
   }
-  top5basedratedcontent(): Observable<any> {
+  topFiveBasedRatedContent(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "averageRatingContent" });
   }
-  programeffectivness(): Observable<any> {
+  programEffectivness(): Observable<any> {
     return this.http.post<any>(obj.commonApi, { key: "countContentRating" });
   }
-  lastupdated(): Observable<any> {
+  lastUpdated(): Observable<any> {
     return this.http.post<any>(obj.commonApi, { key: "lastUpdatedDate" })
   }
-  top5basedratedresource(): Observable<any> {
+  topFiveBasedRatedResource(): Observable<any> {
     return this.http.post<any>(obj.commonApi, { key: "topFiveContentRatings" });
   }
-  topscoreinquiz(): Observable<any> {
+  topScoreInQuiz(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "learningTopscoreQuiz" });
   }
-  learningquiz(): Observable<any> {
+  learningQuiz(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "participationPercentage" });
   }
 
-  averagetimespent() {
+  averageTimeSpent() {
     return this.http.post(obj.commonApi, { key: "averageTimeSpent" });
   }
 
-  diff(data): Observable<any> {
+  percentageVariance(data): Observable<any> {
     return this.http.post(obj.diff, { data });
   }
-  view_resource(): Observable<any> {
+  viewResource(): Observable<any> {
     return this.http.post(obj.commonApi, { key: "adoptionContent" });
   }
   resource(data): Observable<any> {

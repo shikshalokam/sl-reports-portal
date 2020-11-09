@@ -13,17 +13,17 @@ export class HomeComponent implements OnInit {
   public bodhCount: any;
   public unnatiCount: any;
   public samikshaCount: any;
-  public applogin;
-  averagetimespent: any;
-  growth_in_minutes: any;
-  minutes_time: any;
+  public appLogin;
+  averageTimeSpent: any;
+  growthInMinutes: any;
+  minutesTime: any;
   @ViewChild('sidenav') sidenav: MatSidenav;
   isExpanded = true;
   showSubmenu: boolean = false;
   isShowing = false;
   showSubSubMenu: boolean = false;
-  previousDate: any
-  public date:any
+  previousDate: any;
+  public date: any;
 
   mouseenter() {
     if (!this.isExpanded) {
@@ -40,48 +40,35 @@ export class HomeComponent implements OnInit {
     public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.homedata();
-
-
   }
-
 
   homedata() {
-    this.service.app_login().subscribe((response2) => {
-      this.applogin = response2['data'];
-      this.appcount(this.applogin);
+    this.service.appLogin().subscribe((response2) => {
+      this.appLogin = response2['data'];
+      this.appCount(this.appLogin);
 
-      this.service.averagetimespent().subscribe((response3) => {
-        this.averagetimespent = response3['data'];
-        this.growth_in_minutes = this.averagetimespent[0].growth_in_minutes;
-        this.minutes_time = this.averagetimespent[0].minutes_time;
-        this.service.lastupdated().subscribe((response6) => {
-          this.date= response6['data']
-          this.previousDate = this.date[0]['last_updated_date']
-          
-          
-        })
+      this.service.averageTimeSpent().subscribe((response3) => {
+        this.averageTimeSpent = response3['data'];
+        this.growthInMinutes = this.averageTimeSpent[0].growth_in_minutes;
+        this.minutesTime = this.averageTimeSpent[0].minutes_time;
+        this.service.lastUpdated().subscribe((response6) => {
+          this.date = response6['data'];
+          this.previousDate = this.date[0]['last_updated_date'];
+        });
       });
-
     });
-
   }
 
-  appcount(result) {
+  appCount(result) {
     for (let i = 0; i < result.length; i++) {
-      this.bodhCount = result[i]['numUsers']
-
+      this.bodhCount = result[i]['numUsers'];
     }
 
     this.unnatiCount = 0;
     this.samikshaCount = 0;
-
-
   }
-
-
-
 }

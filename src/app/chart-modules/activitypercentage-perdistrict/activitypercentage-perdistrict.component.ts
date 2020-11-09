@@ -15,17 +15,17 @@ var globalMap;
   styleUrls: ['./activitypercentage-perdistrict.component.scss']
 })
 export class ActivitypercentagePerdistrictComponent implements OnInit {
-  markerdata: any;
+  markerData: any;
 
   constructor(public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router) { }
 
   ngOnInit() {
-    this.service.map_loginpercentage().subscribe((res) => {
-      this.markerdata = res['data'];
+    this.service.mapLoginPercentage().subscribe((res) => {
+      this.markerData = res['data'];
       data.default['features'].forEach((element) => {
-        this.markerdata.forEach((prop) => {
+        this.markerData.forEach((prop) => {
           if (
             element.properties['District Name'] ==
             prop['District Name']
@@ -40,10 +40,10 @@ export class ActivitypercentagePerdistrictComponent implements OnInit {
         }
       });
 
-      this.initMapcontainer(data.default['features'], 'mapContainer');
+      this.initMapContainer(data.default['features'], 'mapContainer');
     })
   }
-  initMapcontainer(data, id) {
+  initMapContainer(data, id) {
     const lat = 15.999337593805994;
     const lng = 80.95896916007721;
     globalMap = L.map(id, { zoomControl: false }).setView([lat, lng], 5);

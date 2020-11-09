@@ -1,1 +1,3 @@
-<div [chart]="barchart" style="height: 69vh;"></div>
+<div *ngIf="ratedResourceData"><app-bar-chart [barChartData]="ratedResourceData"></app-bar-chart></div>
+
+

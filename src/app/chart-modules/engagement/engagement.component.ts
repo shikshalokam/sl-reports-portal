@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AppServiceComponent } from '../../app.service';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'angular-highcharts';
-import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-engagement',
@@ -11,11 +10,11 @@ import * as Highcharts from 'highcharts';
 })
 export class EngagementComponent implements OnInit {
   public data: any;
-  public group_id = [];
-  engagementchart: Chart;
+  public groupId = [];
+  engagementChart: Chart;
   public output1 = []
   public output2=[]
-  public engagementdata ;
+  public engagementData ;
   constructor(public http: HttpClient, public service: AppServiceComponent) {}
 
   ngOnInit() {
@@ -30,7 +29,7 @@ export class EngagementComponent implements OnInit {
     for (let i = 0; i < keys.length; i++) {
       if(i==0){
         let result = this.data.map((a) => a[keys[i]]);
-        this.group_id= result
+        this.groupId= result
       }
       else{
         let result = this.data.map((a) => a[keys[i]]);
@@ -44,8 +43,8 @@ export class EngagementComponent implements OnInit {
         }
         }
     }
-  this.engagementdata = this.output2.concat(this.output1)
-    this.engagementchart = new Chart({
+  this.engagementData = this.output2.concat(this.output1)
+    this.engagementChart = new Chart({
       chart: {
         type: 'column',
       },
@@ -54,7 +53,7 @@ export class EngagementComponent implements OnInit {
           '<span style="font-size: 16px ;font-family: Segoe UI">Median Time Taken</span>',
       },
       xAxis: {
-        categories: this.group_id,
+        categories: this.groupId,
       },
       yAxis: {
         title: {
@@ -68,7 +67,7 @@ export class EngagementComponent implements OnInit {
           },
         },
       },
-      series: this.engagementdata,
+      series: this.engagementData,
 
       exporting: {
         enabled: false,

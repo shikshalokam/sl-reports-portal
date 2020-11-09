@@ -49,6 +49,11 @@ import { AverageratingContentComponent } from './chart-modules/averagerating-con
 import { TopscoreAllquizzesComponent } from './chart-modules/topscore-allquizzes/topscore-allquizzes.component';
 import { ResourcesPerdistrictComponent } from './chart-modules/resources-perdistrict/resources-perdistrict.component';
 import { ActivitypercentagePerdistrictComponent } from './chart-modules/activitypercentage-perdistrict/activitypercentage-perdistrict.component';
+import { BarChartComponent } from './chart-modules/bar-chart/bar-chart.component';
+import { SplineChartComponent } from './chart-modules/spline-chart/spline-chart.component';
+import { ColumnChartComponent } from './chart-modules/column-chart/column-chart.component';
+import { PercentageVarianceComponent } from './chart-modules/percentage-variance/percentage-variance.component';
+import { LineChartComponent } from './chart-modules/line-chart/line-chart.component';
 exporting(Highcharts);
 exportdata(Highcharts);
 wordcloud(Highcharts);
@@ -77,6 +82,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     TopscoreAllquizzesComponent,
     ResourcesPerdistrictComponent,
     ActivitypercentagePerdistrictComponent,
+    BarChartComponent,
+    SplineChartComponent,
+    ColumnChartComponent,
+    PercentageVarianceComponent,
+    LineChartComponent,
     ],
   imports: [
     BrowserModule,

@@ -6,91 +6,59 @@ import { Chart } from 'angular-highcharts';
 @Component({
   selector: 'app-percentage-pergroup',
   templateUrl: './percentage-pergroup.component.html',
-  styleUrls: ['./percentage-pergroup.component.scss']
+  styleUrls: ['./percentage-pergroup.component.scss'],
 })
 export class PercentagePergroupComponent implements OnInit {
-  public logintrend: any = [];
+  public loginTrend: any = [];
   public keys;
-  public logintrend_data = [];
-  selecteditems: any;
-  adoptionchart: Chart
-  nodata: any;
-  selection_list: any
+  public loginTrendData = [];
+  selectedItems: any;
+  adoptionChart: Chart;
+  noData: any;
+  selectionList: any;
+  date = [];
+  categories: any;
+  parentData: Object;
 
-  constructor(public http: HttpClient,
+  constructor(
+    public http: HttpClient,
     public service: AppServiceComponent,
-    public router: Router) { }
+    public router: Router
+  ) {}
 
   ngOnInit() {
-    this.service.login_trend().subscribe((res) => {
-      this.logintrend = res['data'];
-      this.keys = Object.keys(this.logintrend[0])
+    this.service.loginTrend().subscribe((res) => {
+      this.loginTrend = res['data'];
+      this.keys = Object.keys(this.loginTrend[0]);
+
       for (let i = 2; i < this.keys.length; i++) {
-        this.logintrend_data.push({ item_id: i + 1, item_text: this.keys[i] })
-        this.selecteditems = ["APSWREIS-TGT 1", "SGT"];
+        this.loginTrendData.push({ item_id: i + 1, item_text: this.keys[i] });
+        this.selectedItems = ['APSWREIS-TGT 1', 'SGT'];
       }
-      this.onItemSelect(this.selecteditems)
-    })
-  }
-
-  onItemSelect(items) {
-    this.service.adoption(items).subscribe((res) => {
-      var data = res['data'];
-      this.selection_list = []
-      this.percentagePerGroup(this.selection_list)
-      if (data == "" || data == null) {
-        this.nodata = "1"
-
-      }
-      else {
-        this.nodata = "0"
-        this.selection_list = data
-        this.percentagePerGroup(this.selection_list);
-
-      }
-
-
-    })
-
-
-  }
-  percentagePerGroup(result) {
-    var date = []
-    this.logintrend.forEach((cs) => {
-      date.push(cs[this.keys[0]])
-    })
-
-
-    this.adoptionchart = new Chart({
-      chart: {
-        type: 'line',
-      },
-      title: {
-        text:
-          '<span style="font-size: 16px ;font-family: Segoe UI">Daily Activity Percentage Per Group</span>',
-      },
-      xAxis: {
-        categories: date,
-      },
-      yAxis: {
-        title: {
-          text: 'Percentage',
-        },
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            enabled: true,
-          },
-        },
-      },
-      series: result,
-
-      exporting: {
-        enabled: true,
-      },
+      this.onItemSelect(this.selectedItems);
     });
   }
 
-
+  onItemSelect(items) {
+    this.loginTrend.forEach((cs) => {
+      this.date.push(cs[this.keys[0]]);
+    });
+    this.service.adoption(items).subscribe((res) => {
+      var data = res['data'];
+      this.selectionList = [];
+      if (data == '' || data == null) {
+        this.noData = '1';
+        this.parentData = {};
+      } else {
+        this.noData = '0';
+        this.selectionList = data;
+      }
+      this.parentData = {
+        data: this.selectionList,
+        title: 'Daily Activity Percentage Per Group',
+        categories: this.date,
+        yaxis_title: 'Percentage',
+      };
+    });
+  }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
-import { Chart } from 'angular-highcharts';
 @Component({
   selector: 'app-learning',
   templateUrl: './learning.component.html',
@@ -9,17 +8,15 @@ import { Chart } from 'angular-highcharts';
 })
 export class LearningComponent implements OnInit {
   public data;
-  public learningquiz;
-  quizname: any = [];
-  learningquizname: any = [];
-  public quiznameselected: String;
-  quiz_names: any = [];
-  learning_quiz_names: any = [];
-  public tabledata = [];
-  public learningnameselected1: String;
-  public learningnameselected2: String;
-  public participation: Chart
-  public score: Chart
+  public learningQuiz;
+  quizName: any = [];
+  learningQuizName: any = [];
+  public quizNameSelected: String;
+  quizNames: any = [];
+  learningQuizNames: any = [];
+  public bestPerformerData = [];
+  public learningNameSelected1: String;
+  public learningNameSelected2: String;
   public data1 = [];
   public data2 = [];
   public data3 = [];
@@ -27,35 +24,40 @@ export class LearningComponent implements OnInit {
   public selected1;
   public selected2;
   public categories = []
-  public ppercentagedata;
-  public spercentagedata;
-  public diff1;
-  public diff2;
+  public participationPercentageData;
+  public scorePercentageData;
+  public participationPercentageVariance;
+  public scorePercentageVariance;
+  participationPercentage:Object
+  scorePercentage:Object
+  participationVariance:Object
+  scoreVariance:Object
+
 
   constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
   ngOnInit() {
-    this.quiznameselected = "Endline quiz (3H strategy)";
-    this.learningnameselected1 = 'Baseline Quiz';
-    this.learningnameselected2 = 'Baseline quiz (3H strategy)';
+    this.quizNameSelected = "Endline quiz (3H strategy)";
+    this.learningNameSelected1 = 'Baseline Quiz';
+    this.learningNameSelected2 = 'Baseline quiz (3H strategy)';
 
-    this.service.topscoreinquiz().subscribe((response1) => {
+    this.service.topScoreInQuiz().subscribe((response1) => {
       this.data = response1['data'];
-      this.quizname = this.data.map((value) => value['section_name']).filter((value, index, _arr) => _arr.indexOf(value) == index);
-      for (var i = 0; i < this.quizname.length; i++) {
-        this.quiz_names.push({ name: this.quizname[i] });
+      this.quizName = this.data.map((value) => value['section_name']).filter((value, index, _arr) => _arr.indexOf(value) == index);
+      for (var i = 0; i < this.quizName.length; i++) {
+        this.quizNames.push({ name: this.quizName[i] });
       }
-      this.updateValues(this.quiznameselected);
-      this.service.learningquiz().subscribe((response2) => {
-        this.learningquiz = response2['data'];
-        this.learningquizname = this.learningquiz
+      this.updateValues(this.quizNameSelected);
+      this.service.learningQuiz().subscribe((response2) => {
+        this.learningQuiz = response2['data'];
+        this.learningQuizName = this.learningQuiz
           .map((value) => value['section_name'])
           .filter((value, index, _arr) => _arr.indexOf(value) == index);
-        for (var i = 0; i < this.learningquizname.length; i++) {
-          this.learning_quiz_names.push({ name: this.learningquizname[i] });
+        for (var i = 0; i < this.learningQuizName.length; i++) {
+          this.learningQuizNames.push({ name: this.learningQuizName[i] });
         }
-        this.learningupdateValues1(this.learningnameselected1);
-        this.learningupdateValues2(this.learningnameselected2);
+        this.learningupdateValues1(this.learningNameSelected1);
+        this.learningupdateValues2(this.learningNameSelected2);
       });
 
     });
@@ -74,10 +76,10 @@ export class LearningComponent implements OnInit {
   }
 
   updateValues(quiz_name) {
-    this.tabledata = [];
+    this.bestPerformerData = [];
     this.data.forEach((cs) => {
       if (cs['section_name'] == quiz_name) {
-        this.tabledata.push(cs);
+        this.bestPerformerData.push(cs);
       }
     });
   }
@@ -89,32 +91,62 @@ export class LearningComponent implements OnInit {
     this.data1 = [];
     this.data3 = [];
    
-    this.learningquiz.forEach((cs) => {
+    this.learningQuiz.forEach((cs) => {
       if (cs['section_name'] == learningQuiz) {
         this.data1.push(Number(cs['participation_percentage']));
         this.data3.push(Number(cs['score_percentage']));
 
       }
     });
-    this.ppercentagedata = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
-    this.spercentagedata = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
+    this.participationPercentageData = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
+    this.scorePercentageData = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
+    
+    this.participationPercentage={
+      data: this.participationPercentageData,
+      title: 'Group Wise Participation Percentage',
+      yaxis_title: 'Participation Percentage(%)',
+      categories:this.categories
 
-    this.participationPercentage(this.ppercentagedata)
-    this.scorePercentage(this.spercentagedata)
+    }
+    this.scorePercentage= {
+      data:this.scorePercentageData,
+      title:"Group Wise Average Score Percentage",
+      yaxis_title: 'Score Percentage(%)',
+      categories:this.categories
 
-    this.service.diff({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
-      this.difference1([{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]);
+    }
+    
+
+    this.service.percentageVariance({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
+      this.participationPercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
+     
+      this.participationVariance={
+        data:this.participationPercentageVariance,
+        title:'Participation Percentage Variance',
+        yaxis_title:'Percentage Variance',
+        categories:this.categories
+
+      }
+     
     })
 
-    this.service.diff({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
-      this.difference2([{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]);
+    this.service.percentageVariance({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
+      this.scorePercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
+      this.scoreVariance={
+        data:this.scorePercentageVariance,
+        title:'Score Percentage Variance',
+        yaxis_title:'Percentage Variance',
+        categories:this.categories
+
+      }
+     
     })
   }
   learningupdateValues2(learningQuiz) {
     this.selected2 = learningQuiz
     this.data2 = [];
     this.data4 = [];
-    this.learningquiz.forEach((cs) => {
+    this.learningQuiz.forEach((cs) => {
       if (cs['section_name'] == learningQuiz) {
         this.data2.push(Number(cs['participation_percentage']));
         this.data4.push(Number(cs['score_percentage']));
@@ -123,254 +155,53 @@ export class LearningComponent implements OnInit {
       }
     });
 
-    this.ppercentagedata = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
-    this.spercentagedata = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
-    this.participationPercentage(this.ppercentagedata)
-    this.scorePercentage(this.spercentagedata)
+    this.participationPercentageData = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
+    this.scorePercentageData = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
+    
+    this.participationPercentage={
+      data: this.participationPercentageData,
+      title: 'Group Wise Participation Percentage',
+      yaxis_title: 'Participation Percentage(%)',
+      categories:this.categories
 
-    this.service.diff({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
-      this.difference1([{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]);
+    }
+    this.scorePercentage= {
+      data:this.scorePercentageData,
+      title:"Group Wise Average Score Percentage",
+      yaxis_title: 'Score Percentage(%)',
+      categories:this.categories
+
+    }
+    
+
+    this.service.percentageVariance({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
+      this.participationPercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
+      
+      this.participationVariance={
+        data:this.participationPercentageVariance,
+        title:'Participation Percentage Variance',
+        yaxis_title:'Percentage Variance',
+        categories:this.categories
+
+      }
     })
 
-    this.service.diff({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
-      this.difference2([{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]);
+    this.service.percentageVariance({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
+      this.scorePercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
+      this.scoreVariance={
+        data:this.scorePercentageVariance,
+        title:'Score Percentage Variance',
+        yaxis_title:'Percentage Variance',
+        categories:this.categories
+
+      }
     })
   }
-  ///////////////////////////////
-  participationPercentage(result) {
-    this.participation = new Chart({
-      chart: {
-        type: 'column',
-      },
-      title: {
+  
+ 
 
-
-        text: '<span style="font-size: 16px ;font-family: Segoe UI">Group Wise Participation Percentage</span>',
-      },
-      xAxis: {
-        categories: this.categories,
-      },
-      yAxis: {
-        // tickPositioner: function () {
-        //   var positions = [];
-        //   var dataMin = -350;
-        //   var dataMax = 750;
-        //   var tick = -250,
-        //     increment = 100;
-
-        //   if (dataMax !== null && dataMin !== null) {
-        //     for (tick; tick - increment <= dataMax; tick += increment) {
-        //       positions.push(tick);
-        //     }
-        //   }
-        //   return positions;
-        // // },
-        // min: -100,
-        // max: 750,
-        // tickInterval: 150,
-        title: {
-          text: 'Participation Percentage(%)',
-        },
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            enabled: true,
-          },
-        },
-        series: {
-        }
-      },
-      series: result,
-      tooltip: {
-        valueSuffix: '%'
-      },
-      exporting: {
-        enabled: false,
-      },
-    });
-  }
-
-  ////////////////////////////
-  scorePercentage(result) {
-    this.score = new Chart({
-      chart: {
-        type: 'column',
-      },
-      title: {
-
-
-        text: '<span style="font-size: 16px ;font-family: Segoe UI">Group Wise Average Score Percentage</span>',
-      },
-      xAxis: {
-        categories: this.categories,
-      },
-      yAxis: {
-        // tickPositioner: function () {
-        //   var positions = [];
-        //   var dataMin = -350;
-        //   var dataMax = 750;
-        //   var tick = -250,
-        //     increment = 100;
-
-        //   if (dataMax !== null && dataMin !== null) {
-        //     for (tick; tick - increment <= dataMax; tick += increment) {
-        //       positions.push(tick);
-        //     }
-        //   }
-        //   return positions;
-        // // },
-        // min: -100,
-        // max: 750,
-        // tickInterval: 150,
-        title: {
-          text: 'Score Percentage(%)',
-        },
-      },
-      plotOptions: {
-        bar: {
-
-          dataLabels: {
-            enabled: true,
-          },
-        },
-      },
-      series: result,
-      tooltip: {
-        valueSuffix: '%'
-      },
-      exporting: {
-        enabled: false,
-      },
-    });
-  }
-
-  ////////////////////////////
-  difference1(result) {
-    this.diff1 = new Chart({
-      chart: {
-        type: 'column',
-      },
-      title: {
-
-
-        text: '<span style="font-size: 16px ;font-family: Segoe UI">Participation Percentage Variance</span>',
-      },
-      xAxis: {
-        categories: this.categories,
-      },
-      yAxis: {
-        // tickPositioner: function () {
-        //   var positions = [];
-        //   var dataMin = -350;
-        //   var dataMax = 750;
-        //   var tick = -250,
-        //     increment = 100;
-
-        //   if (dataMax !== null && dataMin !== null) {
-        //     for (tick; tick - increment <= dataMax; tick += increment) {
-        //       positions.push(tick);
-        //     }
-        //   }
-        //   return positions;
-        // // },
-        // min: -100,
-        // max: 750,
-        // tickInterval: 150,
-        title: {
-          text: 'Percentage Variance',
-        },
-      },
-      plotOptions: {
-        bar: {
-
-          dataLabels: {
-            enabled: true,
-          },
-        },
-        column: {
-          zones: [{
-            value: 0, // Values up to 10 (not including) ...
-            color: 'red' // ... have the color blue.
-          }, {
-            color: 'green' // Values from 10 (including) and up have the color red
-          }]
-        }
-      },
-      // colors: [],
-      series: result,
-      tooltip: {
-        valueSuffix: '%'
-      },
-      exporting: {
-        enabled: false,
-      },
-    });
-  }
-
-
-  ////////////////////////////
-  difference2(result) {
-    this.diff2 = new Chart({
-      chart: {
-        type: 'column',
-      },
-      title: {
-
-
-        text: '<span style="font-size: 16px ;font-family: Segoe UI">Score Percentage Variance</span>',
-      },
-      xAxis: {
-        categories: this.categories,
-      },
-      yAxis: {
-        // tickPositioner: function () {
-        //   var positions = [];
-        //   var dataMin = -350;
-        //   var dataMax = 750;
-        //   var tick = -250,
-        //     increment = 100;
-
-        //   if (dataMax !== null && dataMin !== null) {
-        //     for (tick; tick - increment <= dataMax; tick += increment) {
-        //       positions.push(tick);
-        //     }
-        //   }
-        //   return positions;
-        // // },
-        // min: -100,
-        // max: 750,
-        // tickInterval: 150,
-        title: {
-          text: 'Percentage Variance',
-        },
-      },
-      plotOptions: {
-        bar: {
-
-          dataLabels: {
-            enabled: true,
-          },
-        },
-        column: {
-          zones: [{
-            value: 0, // Values up to 10 (not including) ...
-            color: 'red' // ... have the color blue.
-          }, {
-            color: 'green' // Values from 10 (including) and up have the color red
-          }]
-        }
-      },
-
-      series: result,
-      tooltip: {
-        valueSuffix: '%'
-      },
-      exporting: {
-        enabled: false,
-      },
-    });
-  }
+ 
+ 
 
 
 
