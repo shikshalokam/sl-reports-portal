@@ -42,14 +42,14 @@ export class UserratingBreakdownComponent implements OnInit {
 
     this.data1.forEach((cs) => {
       if (cs.name == content_name) {
-        for (let i = 0; i < Object.keys(cs).length - 2; i++) {
+        for (let i = 1; i < Object.keys(cs).length - 1; i++) {
           let p = Object.keys(cs);
           this.chartData1.push({
             key: `Rating ${p[i]}`,
             value: Number(Object.values(cs)[i]),
           });
         }
-        for (let i = 5; i < Object.keys(cs).length; i++) {
+        for (let i = 6; i < Object.keys(cs).length; i++) {
           this.chartData2.push({
             key: `OverAll Rating`,
             value: Number(Object.values(cs)[i]),

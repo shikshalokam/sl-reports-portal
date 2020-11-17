@@ -100,7 +100,6 @@ export class LearningComponent implements OnInit {
     });
     this.participationPercentageData = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
     this.scorePercentageData = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
-    
     this.participationPercentage={
       data: this.participationPercentageData,
       title: 'Group Wise Participation Percentage',

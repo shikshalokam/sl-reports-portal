@@ -14,7 +14,6 @@ chartData:Chart
   ngOnInit() {
   }
   ngOnChanges(){
-    console.log(this.lineChartData)
     this.lineChart(this.lineChartData['data'], this.lineChartData['categories'])
 
 
