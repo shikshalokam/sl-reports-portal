@@ -46,7 +46,7 @@
         <div class="row">
           <div class="col-sm-3">
             <select id="resource" style="width: 90%;" [(ngModel)]="learningNameSelected1" name="learningNameSelected1"
-              (change)="learningupdateValues1(learningNameSelected1)">
+              (change)="learningupdateValues1()">
               <option [value]="learningNameSelected1" disabled selected="selected">Choose a QuizName</option>
               <option *ngFor="let name of learningQuizNames" [(ngValue)]="name.name" style="font-size: 11px">
                 {{ name.name }}</option>
@@ -55,7 +55,7 @@
           <!-- <div class="col-sm-2"></div> -->
           <div class="col-sm-3">
             <select id="resource" style=" width: 90%;" [(ngModel)]="learningNameSelected2" name="learningNameSelected2"
-              (change)="learningupdateValues2(learningNameSelected2)">
+              (change)="learningupdateValues1()">
               <option [value]="learningNameSelected2" disabled selected="selected">Choose a QuizName</option>
               <option *ngFor="let name of learningQuizNames" [(ngValue)]="name.name" style="font-size: 11px">
                 {{ name.name }}</option>
@@ -93,4 +93,7 @@
       </div>
     </div>
   </div>
+</div>
+<div id="spinner" *ngIf="!data">
+  <div id="loader" class="loading">Loading&#8230;</div>
 </div>

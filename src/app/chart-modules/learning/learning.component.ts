@@ -23,45 +23,43 @@ export class LearningComponent implements OnInit {
   public data4 = [];
   public selected1;
   public selected2;
-  public categories = []
+  public categories = [];
   public participationPercentageData;
   public scorePercentageData;
   public participationPercentageVariance;
   public scorePercentageVariance;
-  participationPercentage:Object
-  scorePercentage:Object
-  participationVariance:Object
-  scoreVariance:Object
-  learning=['learningTopscoreQuiz','participationPercentage']
+  participationPercentage: Object;
+  scorePercentage: Object;
+  participationVariance: Object;
+  scoreVariance: Object;
+  learning = ['learningTopscoreQuiz', 'participationPercentage'];
 
-  constructor(public http: HttpClient, private service: AppServiceComponent) { }
+  constructor(public http: HttpClient, private service: AppServiceComponent) {}
 
   ngOnInit() {
-    this.quizNameSelected = "Endline quiz (3H strategy)";
+    this.quizNameSelected = 'Endline quiz (3H strategy)';
     this.learningNameSelected1 = 'Baseline Quiz';
     this.learningNameSelected2 = 'Baseline quiz (3H strategy)';
 
     this.service.similarApi(this.learning).subscribe((response1) => {
       this.data = response1['learningTopscoreQuiz']['data'];
-      this.quizName = this.data.map((value) => value['section_name']).filter((value, index, _arr) => _arr.indexOf(value) == index);
+      this.quizName = this.data
+        .map((value) => value['section_name'])
+        .filter((value, index, _arr) => _arr.indexOf(value) == index);
       for (var i = 0; i < this.quizName.length; i++) {
         this.quizNames.push({ name: this.quizName[i] });
       }
       this.updateValues(this.quizNameSelected);
 
-        this.learningQuiz = response1['participationPercentage']['data'];
-        this.learningQuizName = this.learningQuiz
-          .map((value) => value['section_name'])
-          .filter((value, index, _arr) => _arr.indexOf(value) == index);
-        for (var i = 0; i < this.learningQuizName.length; i++) {
-          this.learningQuizNames.push({ name: this.learningQuizName[i] });
-        }
-        this.learningupdateValues1(this.learningNameSelected1);
-        this.learningupdateValues2(this.learningNameSelected2);
-
+      this.learningQuiz = response1['participationPercentage']['data'];
+      this.learningQuizName = this.learningQuiz
+        .map((value) => value['section_name'])
+        .filter((value, index, _arr) => _arr.indexOf(value) == index);
+      for (var i = 0; i < this.learningQuizName.length; i++) {
+        this.learningQuizNames.push({ name: this.learningQuizName[i] });
+      }
+      this.learningupdateValues1( );
     });
-
-    
   }
 
   updateValues(quiz_name) {
@@ -73,124 +71,104 @@ export class LearningComponent implements OnInit {
     });
   }
 
-
-
-  learningupdateValues1(learningQuiz) {
-    this.selected1 = learningQuiz
+  learningupdateValues1() {
+    this.selected1 = this.learningNameSelected1;
     this.data1 = [];
     this.data3 = [];
-   
+
     this.learningQuiz.forEach((cs) => {
-      if (cs['section_name'] == learningQuiz) {
+      if (cs['section_name'] == this.learningNameSelected1) {
         this.data1.push(Number(cs['participation_percentage']));
         this.data3.push(Number(cs['score_percentage']));
-
       }
     });
-    this.participationPercentageData = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
-    this.scorePercentageData = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
-    this.participationPercentage={
+    this.participationPercentageData = [
+      { name: this.selected1, data: this.data1, pointWidth: 50 },
+      { name: this.selected2, data: this.data2, pointWidth: 50 },
+    ];
+    this.scorePercentageData = [
+      { name: this.selected1, data: this.data3, pointWidth: 50 },
+      { name: this.selected2, data: this.data4, pointWidth: 50 },
+    ];
+    this.participationPercentage = {
       data: this.participationPercentageData,
       title: 'Group Wise Participation Percentage',
       yaxis_title: 'Participation Percentage(%)',
-      categories:this.categories
-
-    }
-    this.scorePercentage= {
-      data:this.scorePercentageData,
-      title:"Group Wise Average Score Percentage",
+      categories: this.categories,
+    };
+    this.scorePercentage = {
+      data: this.scorePercentageData,
+      title: 'Group Wise Average Score Percentage',
       yaxis_title: 'Score Percentage(%)',
-      categories:this.categories
+      categories: this.categories,
+    };
 
-    }
-    
-
-    this.service.percentageVariance({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
-      this.participationPercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
-     
-      this.participationVariance={
-        data:this.participationPercentageVariance,
-        title:'Participation Percentage Variance',
-        yaxis_title:'Percentage Variance',
-        categories:this.categories
-
-      }
-     
-    })
-
-    this.service.percentageVariance({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
-      this.scorePercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
-      this.scoreVariance={
-        data:this.scorePercentageVariance,
-        title:'Score Percentage Variance',
-        yaxis_title:'Percentage Variance',
-        categories:this.categories
-
-      }
-     
-    })
-  }
-  learningupdateValues2(learningQuiz) {
-    this.selected2 = learningQuiz
+    this.selected2 = this.learningNameSelected2;
     this.data2 = [];
     this.data4 = [];
     this.learningQuiz.forEach((cs) => {
-      if (cs['section_name'] == learningQuiz) {
+      if (cs['section_name'] == this.learningNameSelected2) {
         this.data2.push(Number(cs['participation_percentage']));
         this.data4.push(Number(cs['score_percentage']));
-        this.categories.push(cs["role_externalId"])
-
+        this.categories.push(cs['role_externalId']);
       }
     });
 
-    this.participationPercentageData = [{ name: this.selected1, data: this.data1, pointWidth: 50 }, { name: this.selected2, data: this.data2, pointWidth: 50 }]
-    this.scorePercentageData = [{ name: this.selected1, data: this.data3, pointWidth: 50 }, { name: this.selected2, data: this.data4, pointWidth: 50 }]
-    
-    this.participationPercentage={
+    this.participationPercentageData = [
+      { name: this.selected1, data: this.data1, pointWidth: 50 },
+      { name: this.selected2, data: this.data2, pointWidth: 50 },
+    ];
+    this.scorePercentageData = [
+      { name: this.selected1, data: this.data3, pointWidth: 50 },
+      { name: this.selected2, data: this.data4, pointWidth: 50 },
+    ];
+    this.participationPercentage = {
       data: this.participationPercentageData,
       title: 'Group Wise Participation Percentage',
       yaxis_title: 'Participation Percentage(%)',
-      categories:this.categories
-
-    }
-    this.scorePercentage= {
-      data:this.scorePercentageData,
-      title:"Group Wise Average Score Percentage",
+      categories: this.categories,
+    };
+    this.scorePercentage = {
+      data: this.scorePercentageData,
+      title: 'Group Wise Average Score Percentage',
       yaxis_title: 'Score Percentage(%)',
-      categories:this.categories
+      categories: this.categories,
+    };
 
-    }
-    
+    var PerCentVariance = parseFloat((((this.data2[0] - this.data1[0]) * 100) / this.data1[0]).toFixed(2));
+    this.participationPercentageVariance = [
+      {
+        name: 'Variance',
+        data: [PerCentVariance],
+        showInLegend: false,
+        pointWidth: 50,
+      },
+    ];
 
-    this.service.percentageVariance({ data1: this.data1, data2: this.data2 }).subscribe((res: any) => {
-      this.participationPercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
-      
-      this.participationVariance={
-        data:this.participationPercentageVariance,
-        title:'Participation Percentage Variance',
-        yaxis_title:'Percentage Variance',
-        categories:this.categories
+    this.participationVariance = {
+      data: this.participationPercentageVariance,
+      title: 'Participation Percentage Variance',
+      yaxis_title: 'Percentage Variance',
+      categories: this.categories,
+      text:'Participation Percentage Variance'
+    };
 
-      }
-    })
-
-    this.service.percentageVariance({ data1: this.data3, data2: this.data4 }).subscribe((res: any) => {
-      this.scorePercentageVariance=[{ name: "Variance", data: res['data'], showInLegend: false, pointWidth: 50 }]
-      this.scoreVariance={
-        data:this.scorePercentageVariance,
-        title:'Score Percentage Variance',
-        yaxis_title:'Percentage Variance',
-        categories:this.categories
-
-      }
-    })
+    var scoreVariance = parseFloat((((this.data4[0] - this.data3[0]) * 100) / this.data3[0]).toFixed(2));
+    this.scorePercentageVariance = [
+      {
+        name: 'Variance',
+        data: [scoreVariance],
+        showInLegend: false,
+        pointWidth: 50,
+      },
+    ];
+    this.scoreVariance = {
+      data: this.scorePercentageVariance,
+      title: 'Score Percentage Variance',
+      yaxis_title: 'Percentage Variance',
+      categories: this.categories,
+      text:'Score Percentage Variance'
+    };
   }
   
- 
-
- 
- 
-
-
-
 }

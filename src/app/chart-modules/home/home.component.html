@@ -1,3 +1,4 @@
+
 <div class="container-fluid" style="font-family: 'Segoe UI'">
   <div class="row" style="font-size: 16px ">
     <div class="col-sm-2">
@@ -65,7 +66,7 @@
   <div class="row">
 
     <div class="col-sm-6" style="margin-top:3%;">
-      <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:62.5vh" >
+      <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:64.2vh" >
         <div *ngIf="topScoreQuiz">
           <app-topscore-allquizzes [topScoreQuizData]="topScoreQuiz"></app-topscore-allquizzes>
 
@@ -82,4 +83,7 @@
 
     </div>
   </div>
+</div>
+<div id="spinner" *ngIf="!appLogin">
+  <div id="loader" class="loading">Loading&#8230;</div>
 </div>

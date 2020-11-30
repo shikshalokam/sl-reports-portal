@@ -14,11 +14,11 @@ export class PercentageVarianceComponent implements OnInit,OnChanges {
   ngOnInit() {
   }
   ngOnChanges(){
-    this.varianceChart(this.percentageVariance['data'], this.percentageVariance['categories'])
+    this.varianceChart(this.percentageVariance['data'], this.percentageVariance['categories'] ,this.percentageVariance['text'])
 
 
   }
-varianceChart(result,categories) {
+varianceChart(result,categories,text) {
     this.chartData = new Chart({
       chart: {
         type: 'column',
@@ -26,29 +26,13 @@ varianceChart(result,categories) {
       title: {
 
 
-        text: '<span style="font-size: 16px ;font-family: Segoe UI">Participation Percentage Variance</span>',
+        text: `<span style="font-size: 16px ;font-family: Segoe UI">${text}</span>`,
       },
       xAxis: {
         categories: categories,
       },
       yAxis: {
-        // tickPositioner: function () {
-        //   var positions = [];
-        //   var dataMin = -350;
-        //   var dataMax = 750;
-        //   var tick = -250,
-        //     increment = 100;
-
-        //   if (dataMax !== null && dataMin !== null) {
-        //     for (tick; tick - increment <= dataMax; tick += increment) {
-        //       positions.push(tick);
-        //     }
-        //   }
-        //   return positions;
-        // // },
-        // min: -100,
-        // max: 750,
-        // tickInterval: 150,
+        
         title: {
           text: `${this.percentageVariance['title']}`,
         },
