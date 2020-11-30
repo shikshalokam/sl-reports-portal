@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input,OnChanges} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Chart } from 'angular-highcharts';
   templateUrl: './percentage-pergroup.component.html',
   styleUrls: ['./percentage-pergroup.component.scss'],
 })
-export class PercentagePergroupComponent implements OnInit {
+export class PercentagePergroupComponent implements OnInit ,OnChanges {
   public loginTrend: any = [];
   public keys;
   public loginTrendData = [];
@@ -19,6 +19,7 @@ export class PercentagePergroupComponent implements OnInit {
   date = [];
   categories: any;
   parentData: Object;
+  @Input()loginTrendChartData:any;
 
   constructor(
     public http: HttpClient,
@@ -27,16 +28,17 @@ export class PercentagePergroupComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.service.loginTrend().subscribe((res) => {
-      this.loginTrend = res['data'];
-      this.keys = Object.keys(this.loginTrend[0]);
+   
+  }
+  ngOnChanges(){
+    this.loginTrend = this.loginTrendChartData['data'];
+    this.keys = Object.keys(this.loginTrend[0]);
 
-      for (let i = 2; i < this.keys.length; i++) {
-        this.loginTrendData.push({ item_id: i + 1, item_text: this.keys[i] });
-        this.selectedItems = ['APSWREIS-TGT 1', 'SGT'];
-      }
-      this.onItemSelect(this.selectedItems);
-    });
+    for (let i = 2; i < this.keys.length; i++) {
+      this.loginTrendData.push({ item_id: i + 1, item_text: this.keys[i] });
+      this.selectedItems = ['APSWREIS-TGT 1', 'SGT'];
+    }
+    this.onItemSelect(this.selectedItems);
   }
 
   onItemSelect(items) {

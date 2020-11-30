@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild ,OnChanges, Input} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Router } from '@angular/router';
@@ -7,17 +7,19 @@ import { Router } from '@angular/router';
   templateUrl: './averagerating-content.component.html',
   styleUrls: ['./averagerating-content.component.scss']
 })
-export class AverageratingContentComponent implements OnInit {
+export class AverageratingContentComponent implements OnInit ,OnChanges{
   contentData: any;
+  @Input()averageRatingContentData:any;
 
   constructor( public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router) { }
 
   ngOnInit(){
-    this.service.topFiveBasedRatedContent().subscribe((response5) => {
-      this.contentData = response5['data'];
-  })
+   
+}
+ngOnChanges(){
+  this.contentData = this.averageRatingContentData['data'];
 }
 
 }

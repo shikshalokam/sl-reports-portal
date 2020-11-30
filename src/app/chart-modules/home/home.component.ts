@@ -24,6 +24,12 @@ export class HomeComponent implements OnInit {
   showSubSubMenu: boolean = false;
   previousDate: any;
   public date: any;
+  mapData:Object;
+  mapLoginData:Object;
+  dailyAverageGrowth:Object;
+  topScoreQuiz:Object;
+  averageRatingContent:Object;
+  home=['uniqueActiveUsers','lastUpdatedDate','dailyAverageGrowth','mapDataResources','loginPercentage','topScoreQuiz','averageRatingContent','averageTimeSpent']
 
   mouseenter() {
     if (!this.isExpanded) {
@@ -47,20 +53,32 @@ export class HomeComponent implements OnInit {
   }
 
   homedata() {
-    this.service.appLogin().subscribe((response2) => {
-      this.appLogin = response2['data'];
-      this.appCount(this.appLogin);
+    this.service.similarApi(this.home).subscribe((response2) => {
+      this.appLogin = response2['uniqueActiveUsers']["data"];
+      this.appCount(this.appLogin)
+      this.averageTimeSpent = response2['averageTimeSpent']['data'];
+      this.growthInMinutes = this.averageTimeSpent[0].growth_in_minutes;
+      this.minutesTime = this.averageTimeSpent[0].minutes_time;
+      this.date = response2['lastUpdatedDate']['data'];
+      this.previousDate = this.date[0]['last_updated_date'];
+      this.mapData={
+        data:response2['mapDataResources']['data']
+      }
+      this.mapLoginData={
+        data:response2['loginPercentage']['data']
+      }
+      this.dailyAverageGrowth={
+        data:response2['dailyAverageGrowth']['data']
+      }
+      this.topScoreQuiz={
+        data:response2['topScoreQuiz']['data']
+      }
+      this.averageRatingContent={
+        data:response2['averageRatingContent']['data']
+      }
 
-      this.service.averageTimeSpent().subscribe((response3) => {
-        this.averageTimeSpent = response3['data'];
-        this.growthInMinutes = this.averageTimeSpent[0].growth_in_minutes;
-        this.minutesTime = this.averageTimeSpent[0].minutes_time;
-        this.service.lastUpdated().subscribe((response6) => {
-          this.date = response6['data'];
-          this.previousDate = this.date[0]['last_updated_date'];
-        });
-      });
     });
+  
   }
 
   appCount(result) {

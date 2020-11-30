@@ -28,7 +28,10 @@
 
     <div class="col-sm-8">
       <div class="col-md-12" style="border:2px solid #D3D3D3">
-        <app-dailyactivity-growth></app-dailyactivity-growth>
+        <div *ngIf="dailyAverageGrowth">
+          <app-dailyactivity-growth [dailyAverageGrowthData]="dailyAverageGrowth"></app-dailyactivity-growth>
+
+        </div>
       </div>
     </div>
 
@@ -36,14 +39,19 @@
       <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:73vh">
         <div class="row">
           <div class="col-sm-12">
+            <div *ngIf="mapData">
+              <app-resources-perdistrict [mapChartData]="mapData"></app-resources-perdistrict> </div>
 
-            <app-resources-perdistrict></app-resources-perdistrict>
           </div>
         </div>
 
         <div class="row">
           <div class="col-sm-12 " style="margin-top: 2%;">
-            <app-activitypercentage-perdistrict></app-activitypercentage-perdistrict>
+            <div *ngIf="mapLoginData">
+              <app-activitypercentage-perdistrict [mapLoginChartData]="mapLoginData"></app-activitypercentage-perdistrict>
+
+
+            </div>
           </div>
         </div>
 
@@ -57,15 +65,19 @@
   <div class="row">
 
     <div class="col-sm-6" style="margin-top:3%;">
-      <div class="col-md-12" style="border:2px solid #D3D3D3">
-        <app-topscore-allquizzes></app-topscore-allquizzes>
+      <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:62.5vh" >
+        <div *ngIf="topScoreQuiz">
+          <app-topscore-allquizzes [topScoreQuizData]="topScoreQuiz"></app-topscore-allquizzes>
+
+        </div>
       </div>
     </div>
 
     <div class="col-sm-6" style="margin-top: 3%;">
       <div class="col-md-12" style="border:2px solid #D3D3D3">
-
-        <app-averagerating-content></app-averagerating-content>
+       <div *ngIf="averageRatingContent">
+        <app-averagerating-content [averageRatingContentData]="averageRatingContent"></app-averagerating-content>
+ </div>
       </div>
 
     </div>

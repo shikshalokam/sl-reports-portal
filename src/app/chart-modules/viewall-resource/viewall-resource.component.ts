@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input,OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
   templateUrl: './viewall-resource.component.html',
   styleUrls: ['./viewall-resource.component.scss'],
 })
-export class ViewallResourceComponent implements OnInit {
+export class ViewallResourceComponent implements OnInit ,OnChanges {
+  @Input()adoptionContentData:any;
   complianceAllResource: any = [];
   public resource: any;
   public dropdownList1 = [];
@@ -28,21 +29,23 @@ export class ViewallResourceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.service.viewResource().subscribe((res) => {
-      this.resource = res['data'];
-      this.complianceAllResource = this.resource
-        .map((value) => value['content_name'])
-        .filter((value, index, _arr) => _arr.indexOf(value) == index);
-      for (var i = 0; i < this.complianceAllResource.length; i++) {
-        this.dropdownList1.push({
-          item_id: i + 1,
-          item_text: this.complianceAllResource[i],
-        });
-        this.dropdownList = this.dropdownList1;
-        this.selectedItems = ['<NULL>'];
-      }
-      this.onItemSelect(this.selectedItems);
-    });
+   
+  }
+  ngOnChanges(){
+    this.resource = this.adoptionContentData['data'];
+    this.complianceAllResource = this.resource
+      .map((value) => value['content_name'])
+      .filter((value, index, _arr) => _arr.indexOf(value) == index);
+    for (var i = 0; i < this.complianceAllResource.length; i++) {
+      this.dropdownList1.push({
+        item_id: i + 1,
+        item_text: this.complianceAllResource[i],
+      });
+      this.dropdownList = this.dropdownList1;
+      this.selectedItems = ['<NULL>'];
+    }
+    this.onItemSelect(this.selectedItems);
+
   }
   onItemSelect(item: any) {
     this.service.resource(item).subscribe((response) => {

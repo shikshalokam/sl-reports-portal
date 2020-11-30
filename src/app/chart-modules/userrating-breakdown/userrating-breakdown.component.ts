@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy ,Input,OnChanges} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Subscription } from 'rxjs';
@@ -8,32 +8,31 @@ import { Subscription } from 'rxjs';
   templateUrl: './userrating-breakdown.component.html',
   styleUrls: ['./userrating-breakdown.component.scss']
 })
-export class UserratingBreakdownComponent implements OnInit {
+export class UserratingBreakdownComponent implements OnInit  , OnChanges{
   public data;
   data1 = [];
   contentNames: any = [];
   public resourceSelected: String;
-  serviceProgrameffectivnessSubscription: Subscription;
   chartData1 = [];
   chartData2 = [];
   parentData:Object
-
+  @Input()countContentRatingData:any;
   
   constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
   ngOnInit() {
-    this.resourceSelected =
-      '3H Strategy by Professor Lorraine Graham and Lyn Alder';
-    this.serviceProgrameffectivnessSubscription = this.service
-      .programEffectivness().subscribe((res: any) => {
-        this.data = res['data'];
-        this.data.forEach((cs) => {
-          this.data1.push(cs);
-          this.contentNames.push({ name: cs.name });
-        });
-        this.updateValues(this.resourceSelected);
+   
 
-      });
+  }
+  ngOnChanges(){
+    this.resourceSelected ='3H Strategy by Professor Lorraine Graham and Lyn Alder';
+    this.data = this.countContentRatingData['data'];
+    this.data.forEach((cs) => {
+      this.data1.push(cs);
+      this.contentNames.push({ name: cs.name });
+    });
+    this.updateValues(this.resourceSelected);
+
 
   }
   updateValues(content_name) {
@@ -69,9 +68,7 @@ export class UserratingBreakdownComponent implements OnInit {
 
 
   ngOnDestroy(): void {
-    if (this.serviceProgrameffectivnessSubscription)
-      this.serviceProgrameffectivnessSubscription.unsubscribe();
-
+    
   }
 
 

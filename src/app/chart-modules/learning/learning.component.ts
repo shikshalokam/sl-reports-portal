@@ -32,7 +32,7 @@ export class LearningComponent implements OnInit {
   scorePercentage:Object
   participationVariance:Object
   scoreVariance:Object
-
+  learning=['learningTopscoreQuiz','participationPercentage']
 
   constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
@@ -41,15 +41,15 @@ export class LearningComponent implements OnInit {
     this.learningNameSelected1 = 'Baseline Quiz';
     this.learningNameSelected2 = 'Baseline quiz (3H strategy)';
 
-    this.service.topScoreInQuiz().subscribe((response1) => {
-      this.data = response1['data'];
+    this.service.similarApi(this.learning).subscribe((response1) => {
+      this.data = response1['learningTopscoreQuiz']['data'];
       this.quizName = this.data.map((value) => value['section_name']).filter((value, index, _arr) => _arr.indexOf(value) == index);
       for (var i = 0; i < this.quizName.length; i++) {
         this.quizNames.push({ name: this.quizName[i] });
       }
       this.updateValues(this.quizNameSelected);
-      this.service.learningQuiz().subscribe((response2) => {
-        this.learningQuiz = response2['data'];
+
+        this.learningQuiz = response1['participationPercentage']['data'];
         this.learningQuizName = this.learningQuiz
           .map((value) => value['section_name'])
           .filter((value, index, _arr) => _arr.indexOf(value) == index);
@@ -58,21 +58,10 @@ export class LearningComponent implements OnInit {
         }
         this.learningupdateValues1(this.learningNameSelected1);
         this.learningupdateValues2(this.learningNameSelected2);
-      });
 
     });
 
-    // this.service.learningquiz().subscribe((response2) => {
-    //   this.learningQuiz = response2;
-    //   this.learningquizname = this.learningQuiz
-    //     .map((value) => value['section_name'])
-    //     .filter((value, index, _arr) => _arr.indexOf(value) == index);
-    //   for (var i = 0; i < this.learningquizname.length; i++) {
-    //     this.learning_quiz_names.push({ name: this.learningquizname[i] });
-    //   }
-    //   this.learningupdateValues1(this.learningNameSelected1);
-    //   this.learningupdateValues2(this.learningNameSelected2);
-    // });
+    
   }
 
   updateValues(quiz_name) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild ,OnChanges, Input} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Router } from '@angular/router';
@@ -14,35 +14,35 @@ var globalMap;
   templateUrl: './resources-perdistrict.component.html',
   styleUrls: ['./resources-perdistrict.component.scss']
 })
-export class ResourcesPerdistrictComponent implements OnInit {
+export class ResourcesPerdistrictComponent implements OnInit ,OnChanges{
   markerData: any;
+  @Input() mapChartData:any;
+
 
 
   constructor(public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router) { }
 
-  ngOnInit() {
-    this.service.mapData().subscribe((res) => {
-      this.markerData = res['data'];
-      data.default['features'].forEach((element) => {
-        this.markerData.forEach((prop) => {
-          if (
-            element.properties['District Name'] ==
-            prop['District Name']
-          ) {
-            element.properties = prop;
-          }
-        });
-      });
-      data.default['features'].forEach((element) => {
-        if (!element.properties.numofResources) {
-          element.properties['numofResources'] = 0;
+  ngOnInit() {}
+  ngOnChanges(){
+    this.markerData = this.mapChartData['data'];
+    data.default['features'].forEach((element) => {
+      this.markerData.forEach((prop) => {
+        if (
+          element.properties['District Name'] ==
+          prop['District Name']
+        ) {
+          element.properties = prop;
         }
       });
-      this.initMap(data.default['features'], 'map');
-
-    })
+    });
+    data.default['features'].forEach((element) => {
+      if (!element.properties.numofResources) {
+        element.properties['numofResources'] = 0;
+      }
+    });
+    this.initMap(data.default['features'], 'map');
   }
 
   initMap(data, id) {

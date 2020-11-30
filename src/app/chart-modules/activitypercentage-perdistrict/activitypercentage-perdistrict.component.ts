@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild ,OnChanges, Input} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppServiceComponent } from '../../app.service';
 import { Router } from '@angular/router';
@@ -14,16 +14,20 @@ var globalMap;
   templateUrl: './activitypercentage-perdistrict.component.html',
   styleUrls: ['./activitypercentage-perdistrict.component.scss']
 })
-export class ActivitypercentagePerdistrictComponent implements OnInit {
+export class ActivitypercentagePerdistrictComponent implements OnInit, OnChanges {
   markerData: any;
+  @Input() mapLoginChartData:any;
+
 
   constructor(public http: HttpClient,
     public service: AppServiceComponent,
     public router: Router) { }
 
   ngOnInit() {
-    this.service.mapLoginPercentage().subscribe((res) => {
-      this.markerData = res['data'];
+    
+  }
+  ngOnChanges(){
+    this.markerData = this.mapLoginChartData['data'];
       data.default['features'].forEach((element) => {
         this.markerData.forEach((prop) => {
           if (
@@ -41,7 +45,7 @@ export class ActivitypercentagePerdistrictComponent implements OnInit {
       });
 
       this.initMapContainer(data.default['features'], 'mapContainer');
-    })
+
   }
   initMapContainer(data, id) {
     const lat = 15.999337593805994;
