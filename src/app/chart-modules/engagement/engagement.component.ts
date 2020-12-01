@@ -15,11 +15,13 @@ export class EngagementComponent implements OnInit {
   public output1 = []
   public output2=[]
   public engagementData ;
+  public engagementChartData
   constructor(public http: HttpClient, public service: AppServiceComponent) {}
 
   ngOnInit() {
     this.service.engagement().subscribe((res) => {
-      this.engagementBarChart(res);
+      this.engagementChartData=res;
+      this.engagementBarChart(this.engagementChartData);
     });
   }
 
