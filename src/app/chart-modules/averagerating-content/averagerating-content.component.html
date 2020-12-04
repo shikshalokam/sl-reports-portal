@@ -1,0 +1,17 @@
+<p style="text-align: center; font-size:16px">Average Rating for Content Last Month</p>
+<table class="table table-bordered" >
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Average Rating</th>
+     
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let cs of contentData; index as i"  >
+      <td>{{ cs['name'] }}</td>
+      <td>{{ cs['average_rating'] }}</td>
+      
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,16 @@
+<ng-select class="custom" placeholder="select please ..." [(ngModel)]="selectedItems" (change)="onItemSelect($event)"
+  [multiple]="true">
+  <ng-option *ngFor="let car of dropdownList" [value]="car.item_text" style=" font-size: 11px;">{{car.item_text}}
+  </ng-option>
+</ng-select>
+<div class="row">
+  <div class="col-sm-12">
+    <p class="c-center" *ngIf="noData == 1" style="color:red"> <strong>No data found</strong> </p>
+
+
+    <div *ngIf="noData==0">
+      <app-column-chart [columnChartData]="parentData"></app-column-chart>
+    </div>
+
+  </div>
+</div>

@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
-
-import {
-    HttpRequest, HttpHandler, HttpEvent,
-    HttpInterceptor, HttpResponse, HttpErrorResponse
-} from '@angular/common/http';
+import {HttpRequest, HttpHandler, HttpEvent,HttpInterceptor, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { KeycloakService } from 'keycloak-angular';
-
-
-
-
 @Injectable()
 export class Interceptor implements HttpInterceptor {
     token;
