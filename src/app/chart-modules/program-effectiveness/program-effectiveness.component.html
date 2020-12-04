@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="col-md-12" style="border: 2px solid #d3d3d3; height:62.5vh">
+                <div *ngIf="topFiveContentRatings">
+                    <app-toprated-resource [topFiveContentRatingsData]="topFiveContentRatings"></app-toprated-resource>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <div class="col-md-12" style="border:2px solid #d3d3d3">
+                <div *ngIf="countContentRating">
+                    <app-userrating-breakdown [countContentRatingData]="countContentRating"></app-userrating-breakdown>
+ </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="spinner" *ngIf="!topFiveContentRatings">
+    <div id="loader" class="loading">Loading&#8230;</div>
+  </div>

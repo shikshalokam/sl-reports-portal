@@ -1,0 +1,89 @@
+
+<div class="container-fluid" style="font-family: 'Segoe UI'">
+  <div class="row" style="font-size: 16px ">
+    <div class="col-sm-2">
+      <span>Unique Active Users :</span> </div>
+    <div class="col-sm-1">
+      <span> Bodh: {{ bodhCount }} </span>
+    </div>
+    <div class="col-sm-1">
+      <span> Unnati: {{ unnatiCount }} </span>
+    </div>
+    <div class="col-sm-2">
+      <span> Samiksha: {{ samikshaCount }} </span>
+    </div>
+    <div class="col-sm-3">
+      <p style="font-size: 16px ">Average Time Spent
+        <span style="text-align: center; font-size: 16px">Bodh: {{growthInMinutes}}
+          <td style="font-size: 12px;" [ngClass]="{'positive' : minutesTime > 0,'negative' : minutesTime < 0}">
+            [{{minutesTime}}]</td> </span>
+      </p>
+    </div>
+    <div class="col-sm-3">
+      <p style="font-size: 16px ">Last Updated On:{{previousDate}} </p>
+
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+
+    <div class="col-sm-8">
+      <div class="col-md-12" style="border:2px solid #D3D3D3">
+        <div *ngIf="dailyAverageGrowth">
+          <app-dailyactivity-growth [dailyAverageGrowthData]="dailyAverageGrowth"></app-dailyactivity-growth>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:73vh">
+        <div class="row">
+          <div class="col-sm-12">
+            <div *ngIf="mapData">
+              <app-resources-perdistrict [mapChartData]="mapData"></app-resources-perdistrict> </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 " style="margin-top: 2%;">
+            <div *ngIf="mapLoginData">
+              <app-activitypercentage-perdistrict [mapLoginChartData]="mapLoginData"></app-activitypercentage-perdistrict>
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-sm-6" style="margin-top:3%;">
+      <div class="col-md-12" style="border:2px solid #D3D3D3 ;height:64.2vh" >
+        <div *ngIf="topScoreQuiz">
+          <app-topscore-allquizzes [topScoreQuizData]="topScoreQuiz"></app-topscore-allquizzes>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6" style="margin-top: 3%;">
+      <div class="col-md-12" style="border:2px solid #D3D3D3">
+       <div *ngIf="averageRatingContent">
+        <app-averagerating-content [averageRatingContentData]="averageRatingContent"></app-averagerating-content>
+ </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div id="spinner" *ngIf="!appLogin">
+  <div id="loader" class="loading">Loading&#8230;</div>
+</div>

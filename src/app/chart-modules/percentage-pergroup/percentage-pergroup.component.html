@@ -1,0 +1,9 @@
+<ng-select class="custom" placeholder="select please ..." [(ngModel)]="selectedItems"
+(change)="onItemSelect($event)" [multiple]="true">
+<ng-option *ngFor="let car of loginTrendData" [value]="car.item_text" style=" font-size: 11px;">
+  {{car.item_text}}</ng-option>
+</ng-select>
+<p class="c-center" *ngIf="noData == 1" style="color:red"> <strong>No data found</strong> </p>
+<div *ngIf="noData==0">
+  <app-line-chart [lineChartData]="parentData"></app-line-chart>
+</div>
