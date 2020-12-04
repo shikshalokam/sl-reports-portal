@@ -1,0 +1,10 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12" style="border:2px solid #D3D3D3">
+            <div [chart]="engagementChart"></div>
+</div>
+    </div>
+</div>
+<div id="spinner" *ngIf="!data">
+    <div id="loader" class="loading">Loading&#8230;</div>
+  </div>
