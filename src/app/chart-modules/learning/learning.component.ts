@@ -34,7 +34,7 @@ export class LearningComponent implements OnInit {
   scoreVariance: Object;
   learning = ['learningTopscoreQuiz', 'participationPercentage'];
 
-  constructor(public http: HttpClient, private service: AppServiceComponent) {}
+  constructor(public http: HttpClient, private service: AppServiceComponent) { }
 
   ngOnInit() {
     this.quizNameSelected = 'Endline quiz (3H strategy)';
@@ -52,6 +52,7 @@ export class LearningComponent implements OnInit {
       this.updateValues(this.quizNameSelected);
 
       this.learningQuiz = response1['participationPercentage']['data'];
+
       this.learningQuizName = this.learningQuiz
         .map((value) => value['section_name'])
         .filter((value, index, _arr) => _arr.indexOf(value) == index);
@@ -60,6 +61,7 @@ export class LearningComponent implements OnInit {
       }
       this.learningupdateValues1( );
     });
+ 
   }
 
   updateValues(quiz_name) {
@@ -80,16 +82,9 @@ export class LearningComponent implements OnInit {
       if (cs['section_name'] == this.learningNameSelected1) {
         this.data1.push(Number(cs['participation_percentage']));
         this.data3.push(Number(cs['score_percentage']));
+        this.categories.push(cs['role_externalId']);
       }
     });
-    this.participationPercentageData = [
-      { name: this.selected1, data: this.data1, pointWidth: 50 },
-      { name: this.selected2, data: this.data2, pointWidth: 50 },
-    ];
-    this.scorePercentageData = [
-      { name: this.selected1, data: this.data3, pointWidth: 50 },
-      { name: this.selected2, data: this.data4, pointWidth: 50 },
-    ];
     this.participationPercentage = {
       data: this.participationPercentageData,
       title: 'Group Wise Participation Percentage',
@@ -102,7 +97,6 @@ export class LearningComponent implements OnInit {
       yaxis_title: 'Score Percentage(%)',
       categories: this.categories,
     };
-
     this.selected2 = this.learningNameSelected2;
     this.data2 = [];
     this.data4 = [];
@@ -115,12 +109,12 @@ export class LearningComponent implements OnInit {
     });
 
     this.participationPercentageData = [
-      { name: this.selected1, data: this.data1, pointWidth: 50 },
-      { name: this.selected2, data: this.data2, pointWidth: 50 },
+      { name: this.selected1, data: this.data1, pointWidth: 30 },
+      { name: this.selected2, data: this.data2, pointWidth: 30 },
     ];
     this.scorePercentageData = [
-      { name: this.selected1, data: this.data3, pointWidth: 50 },
-      { name: this.selected2, data: this.data4, pointWidth: 50 },
+      { name: this.selected1, data: this.data3, pointWidth: 30 },
+      { name: this.selected2, data: this.data4, pointWidth: 30 },
     ];
     this.participationPercentage = {
       data: this.participationPercentageData,
@@ -128,20 +122,28 @@ export class LearningComponent implements OnInit {
       yaxis_title: 'Participation Percentage(%)',
       categories: this.categories,
     };
+
     this.scorePercentage = {
       data: this.scorePercentageData,
       title: 'Group Wise Average Score Percentage',
       yaxis_title: 'Score Percentage(%)',
       categories: this.categories,
     };
+    var data5 = [];
+    for (let i = 0; i < this.data2.length; i++) {
+      var PerCentVariance = parseFloat((((this.data2[i] - this.data1[i]) * 100) / this.data1[i]).toFixed(2));
+      if (!isNaN(PerCentVariance)) {
+        data5.push(PerCentVariance)
+      }
+    }
 
-    var PerCentVariance = parseFloat((((this.data2[0] - this.data1[0]) * 100) / this.data1[0]).toFixed(2));
+
     this.participationPercentageVariance = [
       {
         name: 'Variance',
-        data: [PerCentVariance],
+        data: data5,
         showInLegend: false,
-        pointWidth: 50,
+        pointWidth: 30,
       },
     ];
 
@@ -150,16 +152,23 @@ export class LearningComponent implements OnInit {
       title: 'Participation Percentage Variance',
       yaxis_title: 'Percentage Variance',
       categories: this.categories,
-      text:'Participation Percentage Variance'
+      text: 'Participation Percentage Variance'
     };
 
-    var scoreVariance = parseFloat((((this.data4[0] - this.data3[0]) * 100) / this.data3[0]).toFixed(2));
+    var data6 = [];
+    for (let i = 0; i < this.data4.length; i++) {
+      var scoreVariance = parseFloat((((this.data4[i] - this.data3[i]) * 100) / this.data3[i]).toFixed(2));
+      if (!isNaN(scoreVariance)) {
+        data6.push(scoreVariance)
+      }
+    }
+
     this.scorePercentageVariance = [
       {
         name: 'Variance',
-        data: [scoreVariance],
+        data: data6,
         showInLegend: false,
-        pointWidth: 50,
+        pointWidth: 30
       },
     ];
     this.scoreVariance = {
@@ -167,8 +176,8 @@ export class LearningComponent implements OnInit {
       title: 'Score Percentage Variance',
       yaxis_title: 'Percentage Variance',
       categories: this.categories,
-      text:'Score Percentage Variance'
+      text: 'Score Percentage Variance'
     };
   }
-  
+
 }
