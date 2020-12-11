@@ -16,7 +16,7 @@ export class PercentageVarianceComponent implements OnInit,OnChanges {
   ngOnChanges(){
     this.varianceChart(this.percentageVariance['data'], this.percentageVariance['categories'] ,this.percentageVariance['text'])
 
-
+   
   }
 varianceChart(result,categories,text) {
     this.chartData = new Chart({
