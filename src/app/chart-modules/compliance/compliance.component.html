@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="col-md-12" style="border:2px solid #D3D3D3">
+        <div *ngIf="loginTrend">
+          <app-percentage-pergroup [loginTrendChartData]="loginTrend"></app-percentage-pergroup>
+ </div>
+      </div>
+
+    </div>
+    <div class="col-sm-6">
+      <div class="col-md-12" style="border:2px solid #D3D3D3">
+        <div *ngIf="userNeverLoggedIn">
+          <app-userneverloggedin [userNeverLoggedInData]="userNeverLoggedIn"></app-userneverloggedin>
+ </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="row" style="margin-top: 4%;">
+    <div class="col-sm-6">
+      <div class="col-md-12" style="border:2px solid #D3D3D3 ;">
+        <div *ngIf="appCount">
+          <app-dailyactive-perapp [appCountData]="appCount"></app-dailyactive-perapp>
+
+
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-6" style="border:2px solid #D3D3D3">
+      <div *ngIf="adoptionContent">
+        <app-viewall-resource [adoptionContentData]="adoptionContent"></app-viewall-resource>
+
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+<div id="spinner" *ngIf="!userNeverLoggedIn">
+  <div id="loader" class="loading">Loading&#8230;</div>
+</div>
